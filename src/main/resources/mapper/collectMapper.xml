@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="weibo.mapper.collectMapper">
+  <resultMap id="BaseResultMap" type="weibo.pojo.collect">
+    <id column="collectID" jdbcType="VARCHAR" property="collectid" />
+    <result column="userID" jdbcType="INTEGER" property="userid" />
+    <result column="wbID" jdbcType="VARCHAR" property="wbid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    collectID, userID, wbID
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from collect
+    where collectID = #{collectid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from collect
+    where collectID = #{collectid,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insert" parameterType="weibo.pojo.collect">
+    insert into collect (collectID, userID, wbID
+      )
+    values (#{collectid,jdbcType=VARCHAR}, #{userid,jdbcType=INTEGER}, #{wbid,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="weibo.pojo.collect">
+    insert into collect
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="collectid != null">
+        collectID,
+      </if>
+      <if test="userid != null">
+        userID,
+      </if>
+      <if test="wbid != null">
+        wbID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="collectid != null">
+        #{collectid,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="wbid != null">
+        #{wbid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="weibo.pojo.collect">
+    update collect
+    <set>
+      <if test="userid != null">
+        userID = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="wbid != null">
+        wbID = #{wbid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where collectID = #{collectid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="weibo.pojo.collect">
+    update collect
+    set userID = #{userid,jdbcType=INTEGER},
+      wbID = #{wbid,jdbcType=VARCHAR}
+    where collectID = #{collectid,jdbcType=VARCHAR}
+  </update>
+
+  <delete id="uncollect" parameterType="weibo.pojo.collect">
+    delete from collect
+    where userID = #{userid,jdbcType=INTEGER} and wbID = #{wbid,jdbcType=VARCHAR}
+  </delete>
+
+  <select id="ifcollect" parameterType="weibo.pojo.collect" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from collect
+    where userID = #{userid,jdbcType=INTEGER} and wbID = #{wbid,jdbcType=VARCHAR}
+  </select>
+
+
+
+
+</mapper>

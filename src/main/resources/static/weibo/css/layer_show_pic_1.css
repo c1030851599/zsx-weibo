@@ -1,0 +1,91 @@
+﻿@charset "utf-8";
+
+* html,* html body /* 修正IE6振动bug */{
+background-image:url(about:blank);background-attachment:fixed;
+}
+.layer_show_pic{color:#808080;position:absolute;width:100%; border-bottom:none!important; overflow: scroll; z-index: 10001;}
+
+.pic_overflow { overflow-y:hidden; height:100%;}
+.pic_visible { overflow:visible;}
+.layer_show_pic a{color:#185473; outline:none;}
+.layer_show_pic .pic_detail{background:#333;width:630px;margin:10px auto 0;padding:10px 0 0; position:relative; z-index:300;}
+.layer_show_pic .bar, .layer_show_pic .pic, .layer_show_pic .detail, .layer_show_pic .info { padding:0 15px;}
+
+.layer_show_pic .close{background:url(../images/pic_show_close2_1.png) no-repeat;width:20px;height:20px; margin-right:10px;float:right;position:relative; z-index:10000;_background-image:url(../images/pic_show_close2_1.gif); cursor:pointer;}
+.layer_show_pic .close:hover{ background-position:-20px 0;}
+.layer_show_pic .close:active{ background-position:-40px 0;}
+
+.layer_show_pic .bar{height:25px;}
+    .layer_show_pic .bar .show_big,
+    .layer_show_pic .bar .turn_left,
+    .layer_show_pic .bar .turn_right {background:url(../images/pic_icon_1.gif) no-repeat; padding:0 0 0 12px;display:inline-block;padding-top:2px\9;}
+    .layer_show_pic .bar .show_big {background-position: 0 3px;}
+    .layer_show_pic .bar .turn_left {background-position: 0 -28px;}
+    .layer_show_pic .bar .turn_right {background-position: 0 -58px;}
+
+.layer_show_pic .W_vline, .layer_show_pic .info span .W_vline {margin:0 10px;color:#424242;}
+.layer_show_pic .layer_faces .W_vline {margin:0;}
+
+.layer_show_pic .pic{ position:relative;text-align:center; z-index:0; zoom:1;}
+.layer_show_pic .pic img {  z-index:100;}
+
+.layer_show_pic .arrow_prev_hover,
+.layer_show_pic .arrow_next_hover{ display:block;width:50%; height:100%; zoom:1;position:absolute;top:0; background:url(../images/transparent_1.gif) repeat; outline:none; float:left; z-index:500;}
+.layer_show_pic .arrow_prev_hover{left:0; cursor:url(//img.t.sinajs.cn/t4/appstyle/searchV41/images/pic/cursor_l.cur),auto;blr:expression_r(this.onFocus=this.blur());outline: none;}
+.layer_show_pic .arrow_next_hover{ right:0; cursor:url(//img.t.sinajs.cn/t4/appstyle/searchV41/images/pic/cursor_r.cur),auto;blr:expression_r(this.onFocus=this.blur());outline: none;}
+/*.layer_show_pic .loading { padding:232px 0;}*/
+.layer_show_pic img.loading { position:absolute; top:250px; left:295px; _left:0;}
+
+.layer_show_pic .detail{line-height:21px;margin:12px 0 10px;}
+	.layer_show_pic .detail a{color:#0078b6;}
+.layer_show_pic .info{ padding-bottom:10px; line-height:21px;color:#4d4d4d;}
+.layer_show_pic .info span{float:right;}
+
+.layer_show_pic .layer_pic_arr { position:fixed;  width:1010px; top:260px; z-index:5; _position:absolute;}
+.layer_show_pic .arrow_prev,
+.layer_show_pic .arrow_next,
+.layer_show_pic .arrow_more{background:url(../images/pager_arrow2_1.png) no-repeat -100px 0;width:40px;height:95px;display:block;top:260px;_background-image:url(../images/pager_arrow2_1.gif); outline:none;}
+.layer_show_pic .arrow_prev{background-position:-23px 0; float:left;}
+.layer_show_pic .arrow_next{background-position:-38px -95px; float:right;}
+.layer_show_pic .arrow_more{width:80px;background-position:0 -185px; float:right;}
+
+.layer_show_pic .arrow_prev:hover{background-position:-123px 0;}
+.layer_show_pic .arrow_next:hover{background-position:-138px -95px;}
+.layer_show_pic .arrow_more:hover{background-position:-100px -185px;}
+
+.layer_show_pic .arrow_prev:active{background-position:-223px 0;}
+.layer_show_pic .arrow_next:active{background-position:-238px -95px;}
+.layer_show_pic .arrow_more:active{background-position:-300px -185px;}
+
+.layer_show_pic .arrow_prev.disable,
+.layer_show_pic .arrow_prev_disable{background-position:-322px 0 !important;cursor:default;outline:none;}
+.layer_show_pic .arrow_next.disable,
+.layer_show_pic .arrow_next_disable{background-position:-340px -95px !important;cursor:default;outline:none;}
+.layer_show_pic .arrow_more.disable,
+.layer_show_pic .arrow_more_disable{background-position:-300px -185px !important;cursor:default;outline:none;}
+
+.layer_show_pic .page_close{background:url(../images/pic_show_close_big_1.png) no-repeat;width:53px;height:53px;display:block;position:fixed;top:32px;right:0;_position:absolute;_background-image:url(../images/pic_show_close_big_1.gif);}
+.layer_show_pic .page_close:hover{background-position:0 -55px;}
+
+.layer_show_pic .repeat { background:#333!important; width:600px!important; margin:0 auto!important; padding:10px!important; border:none!important;}
+.layer_show_pic .repeat .arrow { display:none;}
+.layer_show_pic .repeat .input textarea { background:#636363; width:592px!important; height:22px; border: solid 1px #3f3f3f!important; color:#fff!important;}
+.layer_show_pic  .repeat .input { margin-top:0; padding-top:0;}
+.layer_show_pic .repeat .comment_list dd { width:560px; _margin: 0 0 0 35px;}
+.layer_show_pic .repeat .comment_list { margin-top:10px; border-color:#454545;}
+.layer_show_pic .repeat a, .layer_show_pic .repeat .info a { color:#0078b6;}
+.layer_show_pic .repeat .W_linkb a { color:#185473;}
+.layer_show_pic .more a { color:#185473;}
+.layer_show_pic .repeat .S_btn_a, .layer_show_pic .repeat .S_btn_a span, .layer_show_pic .repeat .W_btn_a_disable, .layer_show_pic .repeat .W_btn_a_disable span  { background:url(../images/btn_1.png) 0 0; _background:url(../images/btn_1.gif) 0 0; color:#999;}
+.layer_show_pic .repeat .S_btn_a span { background-position:right -25px;}
+.layer_show_pic .repeat .S_btn_a:hover { background-position:0 -50px;}
+.layer_show_pic .repeat .S_btn_a:hover span { background-position:right -75px;}
+.layer_show_pic .repeat .W_btn_a_disable, .layer_show_pic .repeat .W_btn_a_disable:hover { background-position:0 -100px;}
+.layer_show_pic .repeat .W_btn_a_disable span, .layer_show_pic .repeat .W_btn_a_disable:hover span { background-position:right -125px; color:#333;}
+.layer_show_pic .repeat .more { padding:0; border-top: dotted 1px #2c2c2c!important; text-align:center; line-height:32px;}
+.layer_show_pic .W_layer .layer_faces { font-size:12px;}
+
+.layer_show_pic .info_photo { padding-left:15px; margin-bottom:10px;}
+.layer_show_pic .info_photo span { margin:0 10px;}
+
+#js_appstyle_searchV45_css_v6_layer_layer_show_pic{height:42px;}

@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+    <link rel="shortcut icon" href="images/tx.jpg" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>我的首页</title>
+
+    <link rel='stylesheet' id='lmlblog-css'  href='css/lmlblog.css' type='text/css' media='all' />
+    <link rel='stylesheet' id='all-css'  href='css/all.css' type='text/css' media='all' />
+    <script type='text/javascript' src='js/jquery.min.js'></script>
+    <script type='text/javascript' src='js/ueditor.all.min.js'></script>
+
+    <!--bootstrap-->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/fileinput.css" media="all" rel="stylesheet" type="text/css" />
+    <link rel='stylesheet' id='style-css'  href='css/style.css' type='text/css' media='all' />
+
+    <!--jq和上面那个冲突了，注释掉！-->
+    <!--<script src="js/jquery-2.0.3.min.js"></script>-->
+    <script src="js/fileinput.js" type="text/javascript"></script>
+    <script src="js/fileinput_locale_zh.js"></script>
+    <script src="js/bootstrap.js"></script>
+
+
+    <link rel="stylesheet" href="css/bootstrap.css"/>
+    <link rel="stylesheet" href="css/jquery.mCustomScrollbar.min.css"/>
+    <link rel="stylesheet" href="css/jquery.emoji.css"/>
+    <link rel="stylesheet" href="css/railscasts.css"/>
+    <link rel="stylesheet" href="css/index.css"/>
+</head>
+<body>
+            <!-- 菜单 -->
+            <div class="menu-bar">
+                <div class="head_content">
+                    <h1 class="m-logo"><a href="/queryAll" ></a></h1>
+                    <div id="nav" class="menu-menu-1-container">
+                        <ul id="menu-menu-1" class="menu">
+
+                            <li><form class="form-inline">
+                                <input type="text" class="form-control" id="exampleInputEmail3" placeholder="大家都在搜：~~">
+                                <button type="submit" class="btn btn-default" >
+                                    <span class="glyphicon glyphicon-search" aria-hidden="true">找人</span>
+                                </button>
+                                <button type="submit" class="btn btn-default" >
+                                    <span class="glyphicon glyphicon-search" aria-hidden="true">找微博</span>
+                                </button>
+                            </form></li>
+
+                            <li class="menu-item menu-item-type-custom"><a href="/queryAll"><i class="fa fa-home"></i> 首页 </a></li>
+                            <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+
+                            <li class="menu-item menu-item-has-children" style="float:right"><a href="#1"> <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>设置</a>
+                                <ul class="sub-menu">
+                                    <li class="menu-item"><a href="/updatePersonInfo">修改个人信息</a></li>
+                                    <li class="menu-item"><a href="#">修改密码</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li class="menu-item"><a  th:href="@{/logout}">注销</a></li>
+                                </ul>
+                            </li>
+                            <li class="menu-item menu-item-has-children" style="float:right"><a href="#1"><span class="glyphicon glyphicon-envelope"></span>  通知<span class="badge" style="display: none; background-color: red"></span></a>
+                                <ul class="sub-menu">
+                                    <li class="menu-item"><a href="#">私信<span  class="badge" style="display: none; background-color: red"></span></a></li>
+                                    <li class="menu-item"><a href="#">评论<span  class="badge" style="display: none; background-color: red"></span></a></li>
+                                    <li class="menu-item"><a href="#">赞<span  class="badge" style="display: none; background-color: red"></span></a></li>
+                                </ul>
+                            </li>
+                            <li style="float:right"><a href="/person"> <span class="glyphicon glyphicon-user" th:text="${session.user.username}">李吉吉</span></a></li>
+
+                        </ul>
+                    </div>
+                    <div style="clear: both;"></div>
+                </div>
+
+            </div>
+            <!-- menu-bar -->
+
+
+
+            <div style="clear: both;"></div>
+            <div class="lmlblog-member-main" data="1">
+                <div class="lmlblog-member-bg">
+                    <div class="lmlblog-member-content">
+
+                        <!-- 右侧个人简单信息 -->
+                        <div style="width: 30%; float: right; background-color: #fff;height: 289px;" class="lmlblog-member-people ">
+                            <div class="lmlblog-member-avatar other">
+                                <!--头像-->
+                                <a href="/person"><img th:src="@{headImgUpload/}+ ${session.user.headImgName}" class="avatar" style="margin-top: 10px;"
+                                                       height="50px " width="50px" align="center"/></a>
+                            </div>
+
+                            <!-- 昵称 -->
+                            <br> <div align="center"><span style="font-size: 20px;" th:text="${session.user.username}">李吉吉</span></div>
+                            <table align="center" style="table-layout: fixed;">
+                                <tr>
+                                    <td><a>66微博&nbsp;</a></td>
+                                    <td><a>11关注&nbsp;</a></td>
+                                    <td><a>11粉丝</a></td>
+                                </tr>
+                            </table>
+                            <div class="lmlblog-member-username">
+                                <span th:class="${session.user.gender}==0?'lmlblog-mark lmlblog-boy':'lmlblog-mark lmlblog-girl' "><i class="fa fa-mars"></i></span>
+                                <span class="lmlblog-mark lmlblog-lv" title="经验：3815">Lv.6</span>
+                                <span class="lmlblog-mark lmlblog-vip">VIP 6</span></div>
+                            <div class="lmlblog-member-desc">[[${personalLabel}]]</div>
+                        </div>
+
+                        <!--头部-->
+                        <div class="lmlblog-member-header">
+                            <p style="font-size: 30px; color: deepskyblue" size="20"><em>分享新鲜事  ~~~~~~~~~~     有什么新鲜事想要分享？  </em> </p>
+                            <form method="post" action="/postWB" enctype="multipart/form-data">
+                                <textarea class="form-control" id="content" rows="10"  style="width: 719px" name="content"></textarea>
+                                <button type="button" class="btn btn-danger" id="btn666">
+                                    <span class="glyphicon glyphicon-magnet" aria-hidden="true">&nbsp;表情&nbsp;</span>
+                                </button>
+
+                                <!--图片-->
+                                <input id="images-1" name="images[]" type="file" multiple class="file" data-overwrite-initial="false" data-min-file-count="0" accept="image/*"  >
+                                <!--视频-->
+                                <input id="video" name="videoFile" type="file" multiple class="file" data-overwrite-initial="false" data-min-file-count="0" accept="video/mp4"  >
+                                <!--音乐-->
+                                <input id="music" name="musicFile" type="file" multiple class="file" data-overwrite-initial="false" data-min-file-count="0" accept="audio/*"  >
+
+                                <button type="submit" class="btn btn-warning" style="float:right">&nbsp;&nbsp;&nbsp;&nbsp;发布&nbsp;&nbsp;&nbsp;&nbsp;</button>
+
+                            </form>
+                        </div>
+
+
+                        <!-- 微博内容 -->
+
+                        <div class="lmlblog-member-menu clear">
+                            <li class="on"><a href="/queryAll">全部</a></li>
+                            <li><a href="/picture" >图片</a></li>
+                            <li><a href="/video">视频</a></li>
+                            <li><a href="/music" >音乐</a></li>
+                            <li><a href="/article">文章</a></li>
+                        </div>
+                        <div class="lmlblog-member-content-list clear">
+                            <div class="lmlblog-member-left">
+
+                                <!--热歌榜-->
+                                <div class="lmlblog-member-left-bg-music clear">
+                                    <h3>亚洲新歌榜-内地</h3>
+                                    <div id="lmlblog-memeber-bg-music" class="aplayer"></div>
+                                    <img src="http://wx2.sinaimg.cn/large/9c774d91gy1ft4lhr5vbmg20jp08okbw.gif" alt="司空琪">
+                                    <!--<audio src="https://img.jinsom.cn/user_files/12551/bg-music/music_1530776683.mp3" autoplay controls></audio>-->
+                                </div>
+
+                                <!--热门话题-->
+                                <div class="lmlblog-member-left-profile">
+                                    <h3>热门话题</h3>
+                                    <li><i class="fa fa-address-book-o"></i> I D：<span>520</span></li>
+                                    <li><i class="fa fa-transgender"></i> 性别：<span>女生</span></li>
+
+                                </div>
+                                <!--<div class="lmlblog-member-left-profile-more">查看更多 <i class="fa fa-angle-right"></i></div>-->
+                                <!--</div>-->
+
+                                <div class="lmlblog-member-left-visitor clear">
+                                    <h3>公告栏</h3>
+                                    <li>公告1</li>
+                                    <li>公告2</li>
+                                </div>
+                                <div class="lmlblog-member-left-bg-xg clear">
+                                    <h3>好友关注动态</h3>
+                                    6666666666666
+                                </div>
+                            </div>
+
+
+                            <div class="lmlblog-member-right">
+                                <div class="lmlblog-post-list">
+
+
+                                    <!--消息-->
+                                    <div class="lmlblog-posts-list words" style="background-image:url(images/003.png); " data="41890" th:each="weibo:${weibos}">
+                                        <!-- 动态内容部分，包括列表 -->
+                                        <div class="lmlblog-post-user-info">
+                                            <div class="lmlblog-post-user-info-avatar" user-data="1">
+                                                <a href="#1" style="display: inline-block;">
+                                                    <!--头像-->
+                                                    <span class="lmlblog-vip-icon"></span>
+                                                    <img th:src="@{headImgUpload/}+ ${weibo.user.headImgName}" class="avatar"/>
+                                                    <i class="lmlblog-verify lmlblog-verify-a" th:title="${weibo.user.username}"></i></a>
+
+                                                <div class="lmlblog-user-info-card">
+                                                    <img th:src="@{headImgUpload/}+ ${weibo.user.headImgName}" >
+                                                    <div class="info_card_loading"><p>资料加载中...</p>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+
+                                            <div class="lmlblog-post-user-info-name">
+                                                <a href="#1">
+                                                    <font style="color:#333; font-size:20px" th:text="${weibo.user.username}">司空琪</font>
+                                                </a>
+                                                <!--th:text="${weibo.user.username}"-->
+                                                <span class="lmlblog-mark lmlblog-lv" title="经验：3815">Lv.6</span><span class="lmlblog-mark lmlblog-vip">VIP 6</span></div>
+
+                                            <div class="lmlblog-post-user-info-time" th:text="${weibo.postTimeAsString}">12-12 03:10</div>
+                                        </div><!-- 作者信息 -->
+
+                                        <div class="lmlblog-post-setting">
+                                            <i class="fa fa-angle-down"></i>
+                                            <div  class="lmlblog-post-setting-box">
+                                                <ul>
+                                                    <a href="#" title="查看全文"><li>查看全文</li></a>
+                                                    <a href="#1" title="访问主页"><li>访问主页</li></a>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <!--微博内容-->
+                                        <div class="lmlblog-post-content " th:text="${weibo.content}">
+                                            <!--表情-->
+                                            <img src="images/62.png" alt="[s-65]" class="wp-smiley"/>
+                                            <img src="images/62.png" alt="[s-65]" class="wp-smiley"/></P>
+                                        </div>
+
+                                        <!--图片-->
+                                        <div class="lmlblog-post-images-list clear">
+                                            <a  th:if = "${weibo.pic1} != null"th:href="@{imgUpload/}+ ${weibo.pic1}" data-fancybox="gallery" data-caption='<i class="fa fa-copyright"></i> lmlblog'>
+                                                <img th:if = "${weibo.pic1} != null" th:src="@{imgUpload/}+ ${weibo.pic1}" /></a>
+
+                                            <a th:if = "${weibo.pic2} != null" th:href="@{imgUpload/}+ ${weibo.pic2}" data-fancybox="gallery" data-caption='<i class="fa fa-copyright"></i> lmlblog'>
+                                                <img th:if = "${weibo.pic2} != null"  th:src="@{imgUpload/}+ ${weibo.pic2}" /></a>
+
+                                            <a th:if = "${weibo.pic3} != null" th:href="@{imgUpload/}+ ${weibo.pic3}" data-fancybox="gallery" data-caption='<i class="fa fa-copyright"></i> lmlblog'>
+                                                <img th:if = "${weibo.pic3} != null" th:src="@{imgUpload/}+ ${weibo.pic3}" /></a>
+
+                                            <a th:if = "${weibo.pic4} != null" th:href="@{imgUpload/}+ ${weibo.pic4}" data-fancybox="gallery" data-caption='<i class="fa fa-copyright"></i> lmlblog'>
+                                                <img th:if = "${weibo.pic4} != null" th:src="@{imgUpload/}+ ${weibo.pic4}" /></a>
+
+                                            <a th:if = "${weibo.pic5} != null" th:href="@{imgUpload/}+ ${weibo.pic5}" data-fancybox="gallery" data-caption='<i class="fa fa-copyright"></i> lmlblog'>
+                                                <img th:if = "${weibo.pic5} != null" th:src="@{imgUpload/}+ ${weibo.pic5}" /></a>
+
+                                            <a th:if = "${weibo.pic6} != null" th:href="@{imgUpload/}+ ${weibo.pic6}" data-fancybox="gallery" data-caption='<i class="fa fa-copyright"></i> lmlblog'>
+                                                <img th:if = "${weibo.pic6} != null" th:src="@{imgUpload/}+ ${weibo.pic6}" /></a>
+
+                                        </div>
+
+                                        <!--视频-->
+                                        <div class="lmlblog-post-content qi" th:if = "${weibo.video} != null">
+                                            <P align=center><video th:src="@{videoUpload/}+ ${weibo.video}" width="630" height="325"  controls></video>	</p>
+                                        </div>
+
+                                        <!--音乐-->
+                                        <div id="lmlblog-post-content qi" class="aplayer " th:if = "${weibo.music} != null">
+
+                                            <!--<font style="color:#333; font-size:20px" th:text="${weibo.music}">司空琪</font>-->
+                                            <p class="text-center bg-success">[[${weibo.music}]]</p>
+                                            <p class="bg-success">
+                                                <audio th:src="@{musicUpload/}+ ${weibo.music}"  controls class="center-block">
+                                                    <resource th:src="@{musicUpload/}+ ${weibo.music}"></resource>
+                                                </audio></p>
+                                        </div>
+
+
+                                        <!--点赞-->
+                                        <div class="lmlblog-post-like-list">
+                                            <button type="button" class="btn btn-default" aria-label="Left Align" style="font-size: 15px">
+                                                <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true">&nbsp;&nbsp;&nbsp;点赞&nbsp;&nbsp;&nbsp;</span>
+                                            </button>
+
+                                            <button type="button" class="btn btn-default" aria-label="Left Align" style="font-size: 15px">
+                                                <span class="glyphicon glyphicon-retweet" aria-hidden="true">&nbsp;&nbsp;&nbsp;评论&nbsp;&nbsp;&nbsp;</span>
+                                            </button>
+
+                                            <button type="button" class="btn btn-default" aria-label="Left Align" style="font-size: 15px">
+                                                <span class="glyphicon glyphicon-share" aria-hidden="true">&nbsp;&nbsp;&nbsp;转发&nbsp;&nbsp;&nbsp;</span>
+                                            </button>
+
+                                            <button type="button" class="btn btn-default" aria-label="Left Align" style="font-size: 15px">
+                                                <span class="glyphicon glyphicon-star-empty" aria-hidden="true">&nbsp;&nbsp;&nbsp;收藏&nbsp;&nbsp;&nbsp;</span>
+                                            </button>
+                                            <br/>
+                                        </div>
+
+                                        <!-- posts_list -->
+                                    </div>
+
+
+
+                                    <!-- posts_list -->
+                                    <div class="lmlblog-pager"><a class="lmlblog-pager-left" href="#2">上一页</a>
+                                        <div class="lmlblog-pager-center layui-form">
+                                            <select>
+                                                <option  value="#=1">第 1 页</option>
+                                                <option  value="#=2">第 2 页</option>
+                                                <option selected="selected" value="#3">第 3 页</option>
+                                            </select>第 1 页</div>
+                                        <a class="lmlblog-pager-right" href="#3">下一页</a></div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 底部 -->
+                    <div style="clear:both"></div>
+                    <div class="footer">
+                        <div class="footer_b_foot">
+                            <div class="footer_b_top">
+                            </div>
+                            <div class="footer_b_bottom">Design by ZSX ,喜欢的请点个赞</div>
+                        </div>
+                    </div>
+                    <!-- 返回顶部 -->
+                    <a href="javascript:returnTop();" class="cd-top"></a>
+                    <script type="text/javascript">
+var sdelay=0;
+function returnTop() {
+ window.scrollBy(0,-100);//Only for y vertical-axis
+ if(document.body.scrollTop>0) {
+  sdelay= setTimeout('returnTop()',50);
+ }
+}
+</script>
+
+                </div>
+            </div>
+
+<script type='text/javascript' src='js/base.js'></script>
+<script type='text/javascript' src='js/all.js'></script>
+<script type='text/javascript' src='js/plupload.full.min.js'></script>
+<script type='text/javascript' src='js/layui.js'></script>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/highlight.pack.js"></script>
+<script src="js/jquery.mousewheel-3.0.6.min.js"></script>
+<script src="js/jquery.mCustomScrollbar.min.js"></script>
+<script src="js/jquery.emoji.js"></script>
+
+<script>
+    	$("#images-1").fileinput({
+		<!--uploadUrl: '#',      // you must set a valid URL here else you will get an error-->
+		uploadAsync : true,           //默认异步上传
+		showUpload : false,           //是否显示上传按钮,跟随文本框的那个
+		allowedFileExtensions : ['jpg', 'png','gif'],
+		overwriteInitial: false,
+		maxFileSize: 100000 ,				//单位为kb，如果为0表示不限制文件大小
+		<!--限制上传6张-->
+		msgFilesTooMany: "选择上传的图片数量 超过允许的最大数值（6张）！",
+		<!--layoutTemplates:{-->
+		<!--actionUpload:''					//去除上传预览缩略图中的上传图片-->
+		<!--&lt;!&ndash;actionDownload:'' 			//去除上传预览缩略图中的下载图标&ndash;&gt;-->
+		<!--&lt;!&ndash;actionDelete:'', 			//去除上传预览的缩略图中的删除图标&ndash;&gt;-->
+		<!--},//对象用于渲染布局的每个部分的模板配置。您可以设置以下模板来控制窗口小部件布局.eg:去除上传图标-->
+		maxFileCount: 6,		 //表示允许同时上传的最大文件个数
+		showCaption: false,
+		dropZoneEnabled: false,
+		<!--注意：预览框的大小可以在fileinput.js中的defaultPreviewSettings中取设置！！ -->
+		<!--按钮-->
+		browseClass: "btn btn-success",
+		browseLabel: "&nbsp;图片&nbsp;",
+		browseIcon: "<i class=\"glyphicon glyphicon-picture\"></i> ",
+		removeClass: "btn btn-danger",
+		removeLabel: "全部删除",
+		removeIcon: "<i class=\"glyphicon glyphicon-trash\"></i> ",
+
+		uploadIcon: "<i class=\"glyphicon glyphicon-upload\"></i> ",
+		slugCallback: function(filename) {
+		return filename.replace('(', '_').replace(']', '_');
+		}
+		});
+		</script>
+
+<script>
+    	$("#video").fileinput({
+		<!--uploadUrl: '#',      // you must set a valid URL here else you will get an error-->
+		dropZoneTitle : "请上传小于150M的视频！",
+		uploadAsync : true,           //默认异步上传
+		showUpload : false,           //是否显示上传按钮,跟随文本框的那个
+		showCaption: true,				//是否显示标题
+		allowedFileExtensions : [ "mp4"],
+		overwriteInitial: false,
+		maxFileSize: 153600 ,				//单位为kb，如果为0表示不限制文件大小
+		<!--限制上传-->
+		msgFilesTooMany: "选择上传的视频 超过允许的最大数值（1个）！",
+		maxFileCount: 1,		 //表示允许同时上传的最大文件个数
+		showCaption: false,
+		dropZoneEnabled: false,
+		<!--注意：预览框的大小可以在fileinput.js中的defaultPreviewSettings中取设置！！ -->
+		<!--按钮-->
+		browseClass: "btn btn-info",
+		browseLabel: "&nbsp;视频&nbsp;",
+		browseIcon: "<i class=\"glyphicon glyphicon-facetime-video\"></i> ",
+		removeClass: "btn btn-danger",
+		removeLabel: "全部删除",
+		removeIcon: "<i class=\"glyphicon glyphicon-trash\"></i> ",
+		uploadIcon: "<i class=\"glyphicon glyphicon-upload\"></i> ",
+		slugCallback: function(filename) {
+		return filename.replace('(', '_').replace(']', '_');
+		}
+		});
+		</script>
+
+<script>
+    	$("#music").fileinput({
+		<!--uploadUrl: '#',      // you must set a valid URL here else you will get an error-->
+		uploadAsync : true,           //默认异步上传
+		showUpload : false,           //是否显示上传按钮,跟随文本框的那个
+		allowedFileExtensions : ['mp3', 'mpeg','flac'],
+		overwriteInitial: false,
+		maxFileSize: 1000000,				//单位为kb，如果为0表示不限制文件大小
+		msgFilesTooMany: "选择上传的音乐数量 超过允许的最大数值（1首）！",
+		maxFileCount: 1,		 //表示允许同时上传的最大文件个数
+		showCaption: false,
+		dropZoneEnabled: false,
+		<!--注意：预览框的大小可以在fileinput.js中的defaultPreviewSettings中取设置！！ -->
+		<!--按钮-->
+		browseClass: "btn btn-primary",
+		browseLabel: "&nbsp;音乐&nbsp;",
+		browseIcon: "<i class=\"glyphicon glyphicon-music\"></i> ",
+		removeClass: "btn btn-danger",
+		removeLabel: "全部删除",
+		removeIcon: "<i class=\"glyphicon glyphicon-trash\"></i> ",
+		uploadIcon: "<i class=\"glyphicon glyphicon-upload\"></i> ",
+		slugCallback: function(filename) {
+		return filename.replace('(', '_').replace(']', '_');
+		}
+		});
+		</script>
+
+<script>
+    hljs.initHighlightingOnLoad();
+        $("#content").emoji({
+            button: "#btn666",
+            showTab: true,
+            animation: 'fade',
+            icons: [{
+                name: "贴吧表情",
+                path: "images/qq/",
+                maxNum: 50,
+                file: ".png",
+                placeholder: ":{alias}:",
+                alias: {
+                    1: "hehe",
+                    2: "haha",
+                    3: "tushe",
+                    4: "a",
+                    5: "ku",
+                    6: "lu",
+                    7: "kaixin",
+                    8: "han",
+                    9: "lei",
+                    10: "heixian",
+                    11: "bishi",
+                    12: "bugaoxing",
+                    13: "zhenbang",
+                    14: "qian",
+                    15: "yiwen",
+                    16: "yinxian",
+                    17: "tu",
+                    18: "yi",
+                    19: "weiqu",
+                    20: "huaxin",
+                    21: "hu",
+                    22: "xiaonian",
+                    23: "neng",
+                    24: "taikaixin",
+                    25: "huaji",
+                    26: "mianqiang",
+                    27: "kuanghan",
+                    28: "guai",
+                    29: "shuijiao",
+                    30: "jinku",
+                    31: "shengqi",
+                    32: "jinya",
+                    33: "pen",
+                    34: "aixin",
+                    35: "xinsui",
+                    36: "meigui",
+                    37: "liwu",
+                    38: "caihong",
+                    39: "xxyl",
+                    40: "taiyang",
+                    41: "qianbi",
+                    42: "dnegpao",
+                    43: "chabei",
+                    44: "dangao",
+                    45: "yinyue",
+                    46: "haha2",
+                    47: "shenli",
+                    48: "damuzhi",
+                    49: "ruo",
+                    50: "OK"
+                },
+                title: {
+                    1: "呵呵",
+                    2: "哈哈",
+                    3: "吐舌",
+                    4: "啊",
+                    5: "酷",
+                    6: "怒",
+                    7: "开心",
+                    8: "汗",
+                    9: "泪",
+                    10: "黑线",
+                    11: "鄙视",
+                    12: "不高兴",
+                    13: "真棒",
+                    14: "钱",
+                    15: "疑问",
+                    16: "阴脸",
+                    17: "吐",
+                    18: "咦",
+                    19: "委屈",
+                    20: "花心",
+                    21: "呼~",
+                    22: "笑脸",
+                    23: "冷",
+                    24: "太开心",
+                    25: "滑稽",
+                    26: "勉强",
+                    27: "狂汗",
+                    28: "乖",
+                    29: "睡觉",
+                    30: "惊哭",
+                    31: "生气",
+                    32: "惊讶",
+                    33: "喷",
+                    34: "爱心",
+                    35: "心碎",
+                    36: "玫瑰",
+                    37: "礼物",
+                    38: "彩虹",
+                    39: "星星月亮",
+                    40: "太阳",
+                    41: "钱币",
+                    42: "灯泡",
+                    43: "茶杯",
+                    44: "蛋糕",
+                    45: "音乐",
+                    46: "haha",
+                    47: "胜利",
+                    48: "大拇指",
+                    49: "弱",
+                    50: "OK"
+                }
+            }, {
+                path: "images/qq/",
+                maxNum: 91,
+                excludeNums: [41, 45, 54],
+                file: ".png",
+                placeholder: "#qq_{alias}#"
+            }]
+        });
+
+
+
+</script>
+</body>
+</html>

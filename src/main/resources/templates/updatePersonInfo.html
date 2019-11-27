@@ -1,0 +1,152 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-CN">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>个人信息</title>
+
+	<link rel="stylesheet" th:href="@{layui/css/layui.css}">
+	<script type='text/javascript' th:src="@{layui/layui.js}"></script>
+</head>
+<body>
+
+<ul class="layui-nav layui-bg-blue" lay-filter="">
+	<li class="layui-nav-item"><a href="/index">首页</a></li>
+	<li class="layui-nav-item"><a href="/person">个人中心</a></li>
+</ul>
+
+<script>
+//注意：导航 依赖 element 模块，否则无法进行功能性操作
+layui.use('element', function(){
+  var element = layui.element;
+
+  //…
+});
+</script>
+
+<div class="layui-main site-inline site-fix">
+<div class="site-content">
+
+	<div class="site-content">
+		<i class="layui-icon layui-icon-face-smile-b" style="font-size: 40px; color: #1E9FFF;">个人信息</i>
+
+	</div>
+	<br>
+	<br>
+
+	<div class="layui-form-item layui-form-pane">
+		<label class="layui-form-label">登录名</label>
+		<div class="layui-input-inline">
+			<input type="text"  required lay-verify="required" placeholder="666" autocomplete="on" class="layui-input" th:value="${user.username}" disabled>
+		</div>
+		<div class="layui-form-mid layui-word-aux">（不能修改！）</div>
+	</div>
+
+<form class="layui-form layui-form-pane" action="/updateInfo" method="post">
+	<!--/updateInfo-->
+
+	<div class="layui-form-item">
+		<label class="layui-form-label">昵称</label>
+		<div class="layui-input-block">
+			<input type="text" name="webName" required  lay-verify="required" placeholder="请输入昵称" autocomplete="off" class="layui-input" th:value="${user.webName}">
+		</div>
+	</div>
+
+	<div class="layui-form-item">
+		<label class="layui-form-label">真实姓名</label>
+		<div class="layui-input-block">
+			<input type="text" name="name" required  lay-verify="required" placeholder="请输入真实名字" autocomplete="off" class="layui-input" th:value="${user.name}">
+		</div>
+	</div>
+
+
+	<div class="layui-form-item">
+		<label class="layui-form-label">地址</label>
+		<div class="layui-input-block">
+			<select name="city" lay-verify="required">
+				<option value=""></option>
+				<option value="北京" th:selected="${user.city == '北京'}">北京</option>
+				<option value="上海" th:selected="${user.city == '上海'}">上海</option>
+				<option value="广州" th:selected="${user.city == '广州'}">广州</option>
+				<option value="深圳" th:selected="${user.city == '深圳'}">深圳</option>
+				<option value="杭州" th:selected="${user.city == '杭州'}">杭州</option>
+				<option value="佛山" th:selected="${user.city == '佛山'}">佛山</option>
+				<option value="东莞" th:selected="${user.city == '东莞'}">东莞</option>
+				<option value="湛江" th:selected="${user.city == '湛江'}">湛江</option>
+				<option value="天津" th:selected="${user.city == '天津'}">天津</option>
+				<option value="成都" th:selected="${user.city == '成都'}">成都</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="layui-form-item">
+		<label class="layui-form-label">性别</label>
+		<div class="layui-input-block">
+			<input type="radio" name="gender" value="0" title="男" th:checked="${user.gender == 0}">
+			<input type="radio" name="gender" value="1" title="女" th:checked="${user.gender == 1}">
+		</div>
+	</div>
+
+	<div class="layui-form-item">
+		<label class="layui-form-label">生日</label>
+	<div class="layui-inline">
+		<input type="text" name="Stringbirthday" class="layui-input" id="test1" th:value="${#dates.format(user.birthday,'yyyy-MM-dd')}">
+	</div>
+	</div>
+
+	<div class="layui-form-item layui-form-text">
+		<label class="layui-form-label">简介</label>
+		<div class="layui-input-block">
+			<textarea name="personal_label" placeholder="请输入内容" class="layui-textarea" >[[${personalLabel}]]</textarea>
+		</div>
+	</div>
+	<div class="layui-form-item">
+		<div class="layui-input-block">
+			<button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemo">立即提交</button>
+			<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+		</div>
+	</div>
+</form>
+</div>
+</div>
+
+
+<script>
+//Demo
+layui.use('form', function(){
+  var form = layui.form;
+
+  //监听提交
+  form.on('submit(formDemo)', function(data){
+    <!--layer.msg(JSON.stringify(data.field));-->
+    return true;
+  });
+});
+</script>
+
+
+<!-- 你的HTML代码 -->
+
+<script>
+//一般直接写在一个js文件中
+layui.use(['layer', 'form'], function(){
+  var layer = layui.layer
+  ,form = layui.form;
+
+  layer.msg('个人信息');
+});
+</script>
+
+<script>
+layui.use('laydate', function(){
+  var laydate = layui.laydate;
+
+  //执行一个laydate实例
+  laydate.render({
+    elem: '#test1' //指定元素
+  });
+});
+</script>
+
+</body>
+</html>
