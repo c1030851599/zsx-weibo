@@ -1,13 +1,16 @@
 package weibo.Controller;
 
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import weibo.Service.*;
+import weibo.common.WeiboMethod;
 import weibo.pojo.*;
 
 import javax.servlet.http.HttpSession;
@@ -38,8 +41,12 @@ public class WeiboController {
     @Autowired
     collectService collectService;
 
+    @Autowired
+    WeiboMethod method;
 
-    @RequestMapping(value = "/postWB")
+
+    @PostMapping(value = "/postWB")
+    @ApiOperation(value = "发送微博")
     public String upload(@RequestParam("images[]") MultipartFile[] images,@RequestParam("videoFile") MultipartFile videoFile,@RequestParam("musicFile") MultipartFile musicFile, HttpSession session, weibo weibo) throws Exception {
 //        接收图片！！！！！！！！！！
         String[] a = new String[6];
@@ -130,7 +137,8 @@ public class WeiboController {
         return "redirect:/queryAll";
     }
 
-    @RequestMapping(value = "/zfWB")
+    @PostMapping(value = "/zfWB")
+    @ApiOperation(value = "转发所有微博（实时）")
     public String upload(String zfContent,String username, String weiboid) throws Exception {
         weibo weibo = new weibo();
         //        微博id(用uuid 取代id )
@@ -151,8 +159,8 @@ public class WeiboController {
     }
 
 
-    //  查询所有微博（实时）
     @GetMapping("/queryAll")
+    @ApiOperation(value = "查询所有微博（实时）")
     public String queryAllWeiboNow(HttpSession session, Model model){
         // 当前用户信息
         User user = (User) session.getAttribute("user");
@@ -162,72 +170,15 @@ public class WeiboController {
         collect collect = new collect();
         collect.setUserid(user.getId());
 
+        List<weiboCustom> weibos1 = method.getWeibos(weibos,collect,love);
 
-
-//        将数据库中的时间从date转为string ，并且安装 yyyy-MM-dd HH:mm:ss 格式 。
-        for (weiboCustom weibo :weibos) {
-            weibo.getUser().setPersonalLabel( weibo.getUser().getpersonal_label());
-            Date postTime = weibo.getPostTime();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String timeFormat = sdf.format(postTime);
-            weibo.setPostTimeAsString(timeFormat);
-
-            if (weibo.getZfwbid()!=null){
-                weiboCustom weibo1 = weiboService.queryWeiboByID(weibo.getZfwbid());
-                zfweibo zfweibo =new zfweibo();
-                zfweibo.setWeiboId(weibo1.getWeiboId());
-                zfweibo.setContent(weibo1.getContent());
-                zfweibo.setMusic(weibo1.getMusic());
-                zfweibo.setPic1(weibo1.getPic1());
-                zfweibo.setPic2(weibo1.getPic2());
-                zfweibo.setPic3(weibo1.getPic3());
-                zfweibo.setPic4(weibo1.getPic4());
-                zfweibo.setPic5(weibo1.getPic5());
-                zfweibo.setPic6(weibo1.getPic6());
-                zfweibo.setVideo(weibo1.getVideo());
-                zfweibo.setPostTime(weibo1.getPostTime());
-                zfweibo.setUser(((weiboCustom) weibo1).getUser());
-                weibo.setZfweibo(zfweibo);
-            }
-
-//            是否对这一条微博点赞：
-            love.setWbid(weibo.getWeiboId());
-            love love1 = likeService.ifLike(love);
-            if(love1 == null){
-                weibo.setIflike(false);
-            }else{
-                weibo.setIflike(true);
-            }
-
-//            是否对这一条微博收藏：
-            collect.setWbid(weibo.getWeiboId());
-            collect ifcollect = collectService.ifcollect(collect);
-            if(ifcollect == null){
-                 weibo.setIfcollect(false);
-            }else{
-                weibo.setIfcollect(true);
-            }
-
-            List<plList> plList =  plListService.selectByWeiboId(weibo.getWeiboId());
-            for (plList plL : plList) {
-                List<hfplList> hfplLists = hfplListService.selectByPlId(plL.getId());
-                for (hfplList hfpl : hfplLists) {
-                    hfpl.setUserHeadImg(userService.findUser(hfpl.getUsername()).getHeadImgName());
-                }
-                plL.setHfplLists(hfplLists);
-                plL.setUserHeadImg(userService.findUser(plL.getUsername()).getHeadImgName());
-            }
-
-            weibo.setPlLists(plList);
-        }
-
-            model.addAttribute("weibos", weibos);
+        model.addAttribute("weibos", weibos1);
         model.addAttribute("personalLabel",user.getpersonal_label());
         return "/index";
     }
 
-    //  查询所有我微博（实时）
     @GetMapping("/queryMe")
+    @ApiOperation(value = "查询所有我微博（实时）")
     public String queryAllPersonalWeibo(HttpSession session, Model model){
         // 当前用户信息
         User user = (User) session.getAttribute("user");
@@ -248,8 +199,9 @@ public class WeiboController {
         return "/index";
     }
 
-//    头像上传
+
     @RequestMapping(value = "/headImg")
+    @ApiOperation(value = "头像上传")
     public String headImg(@RequestParam("headImg") MultipartFile headImg, HttpSession session) throws Exception {
         User user = (User) session.getAttribute("user");
 

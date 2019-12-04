@@ -1,5 +1,6 @@
 package weibo.Controller;
 
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +21,7 @@ public class UserController {
     UserService userService;
 
     @RequestMapping("/updateInfo")
+    @ApiOperation(value = "修改个人信息。")
     public String updateInfo(@RequestParam("Stringbirthday")String Stringbirthday , User user, HttpSession session, Model model) throws ParseException {
         User User = (User) session.getAttribute("user");
         User.setpersonal_label(user.getpersonal_label());

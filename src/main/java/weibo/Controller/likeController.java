@@ -1,5 +1,8 @@
 package weibo.Controller;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,15 +20,21 @@ public class likeController {
 
     @Autowired
     UserService userService;
-
     @Autowired
     loveService likeService;
-
     @Autowired
     WeiboService weiboService;
 
     @GetMapping("/like")
-    public String like(String zCount,String username,String weiboid){
+    @ApiOperation(value = "点赞，给某条博客点赞")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "zCount", value = "点赞数", required = true, dataType = "String",paramType = "query"),
+        @ApiImplicitParam(name = "username", value = "用户名", required = true, dataType = "String",paramType = "query"),
+        @ApiImplicitParam(name = "weiboid", value = "微博的id", required = true, dataType = "String",paramType = "query")
+    })
+    public String like(String zCount, String username, String weiboid){
+
+        System.out.println(zCount + " "+username + " " + weiboid );
 
         love love = new love();
 
@@ -47,7 +56,9 @@ public class likeController {
         return "";
     }
 
+
     @GetMapping("/unlike")
+    @ApiOperation(value = "取消点赞，取消给某条博客点赞")
     public String unlike(String zCount,String username,String weiboid){
 
         love love = new love();
@@ -70,7 +81,6 @@ public class likeController {
 
         return "";
     }
-
 
 
 }

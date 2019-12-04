@@ -32,12 +32,8 @@
   <sql id="Base_Column_List">
     weibo_id, user_id, content, postTime,pic1,pic2,pic3,pic4,pic5,pic6,video,music,zan,zfwbid
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from weibo
-    where weibo_id = #{weiboId,jdbcType=VARCHAR}
-  </select>
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from weibo
     where weibo_id = #{weiboId,jdbcType=VARCHAR}

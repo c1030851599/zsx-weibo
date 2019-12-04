@@ -1,5 +1,6 @@
 package weibo.Controller;
 
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,6 +28,7 @@ public class plController {
 
 
     @GetMapping("/pl")
+    @ApiOperation(value = "评论")
     public String pl(String plContent,String time,String username,String weiboid) throws ParseException {
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -47,6 +49,7 @@ public class plController {
     }
 
     @GetMapping("/hfpl")
+    @ApiOperation(value = "回复评论")
     public String hfpl(String hfContent,String time,String username,String plid) throws ParseException {
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

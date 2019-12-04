@@ -42,6 +42,8 @@ public class shiroConfig {
         filterChainDefinitionMap.put("/js/**", "anon");
         filterChainDefinitionMap.put("/layui/**", "anon");
         filterChainDefinitionMap.put("/jQueryWbPI/**", "anon");
+        filterChainDefinitionMap.put("/swagger**", "anon");
+        filterChainDefinitionMap.put("/webjars/**", "anon");
         filterChainDefinitionMap.put("/jqueryDZ/**", "anon");
         filterChainDefinitionMap.put("/jqueryMusic201805240027/**", "anon");
         filterChainDefinitionMap.put("/login", "anon");
