@@ -2908,10 +2908,13 @@ select[multiple].form-group-lg .form-control {
   }
   .form-inline .form-control {
     display: inline-block;
-    width: auto;
+    width: 400px;
     vertical-align: middle;
   }
   .form-inline .form-control-static {
+    display: inline-block;
+  }
+  .form-inline .form-control2-static {
     display: inline-block;
   }
   .form-inline .input-group {

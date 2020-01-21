@@ -274,5 +274,53 @@
     select user.*,weibo.* from weibo,user where weibo_id = #{weiboId,jdbcType=VARCHAR} and user.id = user_id
   </select>
 
+  <select id="queryByKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select user.*,weibo.* from weibo,user
+    <where>
+      and weibo.user_id=user.id AND weibo.content like  concat('%',#{content},'%')
+      ORDER BY postTime DESC
+    </where>
+  </select>
+
+
+  <select id="queryAllWeiboByImgKey" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select user.*,weibo.* from weibo,user
+    <where>
+      and weibo.user_id=user.id
+      and weibo.pic1!=''
+      AND weibo.content like  concat('%',#{content},'%')
+      ORDER BY postTime DESC
+    </where>
+  </select>
+
+  <select id="queryAllWeiboByVideoKey" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select user.*,weibo.* from weibo,user
+    <where>
+      and weibo.user_id=user.id
+      and weibo.video!=''
+      AND weibo.content like  concat('%',#{content},'%')
+      ORDER BY postTime DESC
+    </where>
+  </select>
+
+  <select id="queryAllWeiboByMusicKey" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select user.*,weibo.* from weibo,user
+    <where>
+      and weibo.user_id=user.id
+      and weibo.music!=''
+      AND weibo.content like  concat('%',#{content},'%')
+      ORDER BY postTime DESC
+    </where>
+  </select>
+
+  <select id="queryAllWeiboByArticleKey" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select user.*,weibo.* from weibo,user
+    <where>
+      and weibo.user_id=user.id
+      and weibo.content!=''
+      AND weibo.content like  concat('%',#{content},'%')
+      ORDER BY postTime DESC
+    </where>
+  </select>
 
 </mapper>

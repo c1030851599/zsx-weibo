@@ -36,5 +36,20 @@ public interface WeiboService {
 
     weiboCustom queryWeiboByID(String id);
 
+//    查询微博(某条)
+    List<weiboCustom> queryByKeyWord(String content);
+
+
+    //    查询带有图片的微博列表
+    List<weiboCustom> queryAllWeiboByImgKey(String content);
+
+    //    查询带有视频的微博列表
+    List<weiboCustom> queryAllWeiboByVideoKey(String content);
+
+    //    查询带有音乐的微博列表
+    List<weiboCustom> queryAllWeiboByMusicKey(String content);
+
+    //    查询带有文字的微博列表
+    List<weiboCustom> queryAllWeiboByArticleKey(String content);
 
 }

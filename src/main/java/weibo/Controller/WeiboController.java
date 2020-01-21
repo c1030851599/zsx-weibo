@@ -4,10 +4,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import weibo.Service.*;
 import weibo.common.WeiboMethod;
@@ -45,7 +42,7 @@ public class WeiboController {
     WeiboMethod method;
 
 
-    @PostMapping(value = "/postWB")
+    @RequestMapping(value = "/postWB")
     @ApiOperation(value = "发送微博")
     public String upload(@RequestParam("images[]") MultipartFile[] images,@RequestParam("videoFile") MultipartFile videoFile,@RequestParam("musicFile") MultipartFile musicFile, HttpSession session, weibo weibo) throws Exception {
 //        接收图片！！！！！！！！！！
@@ -137,7 +134,7 @@ public class WeiboController {
         return "redirect:/queryAll";
     }
 
-    @PostMapping(value = "/zfWB")
+    @GetMapping(value = "/zfWB")
     @ApiOperation(value = "转发所有微博（实时）")
     public String upload(String zfContent,String username, String weiboid) throws Exception {
         weibo weibo = new weibo();
@@ -155,11 +152,11 @@ public class WeiboController {
         weibo.setZfwbid(weiboid);
 
         weiboService.post(weibo);
-        return "redirect:/queryAll";
+        return "";
     }
 
 
-    @GetMapping("/queryAll")
+    @RequestMapping("/queryAll")
     @ApiOperation(value = "查询所有微博（实时）")
     public String queryAllWeiboNow(HttpSession session, Model model){
         // 当前用户信息
@@ -177,7 +174,7 @@ public class WeiboController {
         return "/index";
     }
 
-    @GetMapping("/queryMe")
+    @RequestMapping("/queryMe")
     @ApiOperation(value = "查询所有我微博（实时）")
     public String queryAllPersonalWeibo(HttpSession session, Model model){
         // 当前用户信息

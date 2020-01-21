@@ -22,10 +22,11 @@ public class WeiboServiceImpl implements WeiboService {
         System.out.println(insert);
     }
 
-//    查询所有微博
+    /**
+     * 查询所有微博
+     */
     @Override
     public List<weiboCustom> queryAllWeibo() {
-
         List<weiboCustom> weibos = weiboMapper.queryAllWeibo();
         return weibos;
     }
@@ -77,6 +78,36 @@ public class WeiboServiceImpl implements WeiboService {
         return weibo;
     }
 
+
+    @Override
+    public List<weiboCustom> queryByKeyWord(String content) {
+        List<weiboCustom> weibos = weiboMapper.queryByKey(content);
+        return weibos;
+    }
+
+    @Override
+    public List<weiboCustom> queryAllWeiboByImgKey(String content) {
+        List<weiboCustom> weibos = weiboMapper.queryAllWeiboByImgKey(content);
+        return weibos;
+    }
+
+    @Override
+    public List<weiboCustom> queryAllWeiboByVideoKey(String content) {
+        List<weiboCustom> weibos = weiboMapper.queryAllWeiboByVideoKey(content);
+        return weibos;
+    }
+
+    @Override
+    public List<weiboCustom> queryAllWeiboByMusicKey(String content) {
+        List<weiboCustom> weibos = weiboMapper.queryAllWeiboByMusicKey(content);
+        return weibos;
+    }
+
+    @Override
+    public List<weiboCustom> queryAllWeiboByArticleKey(String content) {
+        List<weiboCustom> weibos = weiboMapper.queryAllWeiboByArticleKey(content);
+        return weibos;
+    }
 
 
 }

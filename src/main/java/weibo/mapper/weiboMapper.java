@@ -35,6 +35,13 @@ public interface weiboMapper {
 
     weiboCustom queryWeiboByID(String id);
 
+    List<weiboCustom> queryByKey(String content);
 
+    List<weiboCustom> queryAllWeiboByImgKey(String content);
 
+    List<weiboCustom> queryAllWeiboByVideoKey(String content);
+
+    List<weiboCustom> queryAllWeiboByMusicKey(String content);
+
+    List<weiboCustom> queryAllWeiboByArticleKey(String content);
 }

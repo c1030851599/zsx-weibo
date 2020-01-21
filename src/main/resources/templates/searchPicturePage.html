@@ -58,7 +58,7 @@
 
 				<li>
 					<form class="form-inline" method="post" action="/search">
-					<input type="text" class="form-control" id="exampleInputEmail3" name="content" placeholder="大家都在搜：~~">
+					<input type="text" class="form-control" id="exampleInputEmail3" name="search" placeholder="大家都在搜：~~">
 					<button type="submit" class="btn btn-default" >
 						<span class="glyphicon glyphicon-search" aria-hidden="true">查找</span>
 					</button>
@@ -87,7 +87,7 @@
 						<li class="menu-item"><a href="#">赞<span  class="badge" style="display: none; background-color: red"></span></a></li>
 					</ul>
 				</li>
-				<li style="float:right"><a href="/person"> <span class="glyphicon glyphicon-user" th:text="${session.user.username}">李吉吉</span></a></li>
+				<li style="float:right"><a href="/person"> <span class="glyphicon glyphicon-user" id="username" th:text="${session.user.username}">李吉吉</span></a></li>
 
 			</ul>
 		</div>
@@ -104,81 +104,29 @@
 	<div class="lmlblog-member-bg">
 		<div class="lmlblog-member-content">
 
-			<!-- 右侧个人简单信息 -->
-			<div style="width: 30%; float: right; background-color: #fff;height: 260px;" class="lmlblog-member-people ">
-				<div class="lmlblog-member-avatar other">
-					<!--头像-->
-					<a href="/person"><img th:src="@{headImgUpload/}+ ${session.user.headImgName}" class="avatar"  id="headImg" style="margin-top: 10px;"
-										   height="50px " width="50px" align="center"/></a>
-				</div>
 
-				<!-- 昵称 -->
-				<br> <div align="center"><span style="font-size: 20px;" id="username" th:text="${session.user.username}">李吉吉</span></div>
-				<table align="center" style="table-layout: fixed;">
-					<tr>
-						<td><a>66微博&nbsp;</a></td>
-						<td><a>11关注&nbsp;</a></td>
-						<td><a>11粉丝</a></td>
-					</tr>
-				</table>
-				<div class="lmlblog-member-username">
-					<span th:class="${session.user.gender}==0?'lmlblog-mark lmlblog-boy':'lmlblog-mark lmlblog-girl' "><i class="fa fa-mars"></i></span>
-					<span class="lmlblog-mark lmlblog-lv" title="经验：3815">Lv.6</span>
-					<span class="lmlblog-mark lmlblog-vip">VIP 6</span></div>
-				<div class="lmlblog-member-desc">[[${personalLabel}]]</div>
-			</div>
 
 			<!--头部-->
-			<div class="lmlblog-member-header">
-				<p style="font-size: 30px; color: deepskyblue" size="20"><em>分享新鲜事  ~~~~~~~~~~     有什么新鲜事想要分享？  </em> </p>
-				<form method="post" action="/postWB" enctype="multipart/form-data" style="height:230px" id="postWB">
-					<textarea id="content" class="form-control" required="required" rows="10" style="width: 719px;height:156px" name="content"></textarea>
-					<button type="button" class="btn btn-danger" id="btn666">
-						<span class="glyphicon glyphicon-magnet" aria-hidden="true">&nbsp;表情&nbsp;</span>
-					</button>
-
-					<!--图片-->
-					<input id="images-1" name="images[]" type="file" multiple class="file" data-overwrite-initial="false" data-min-file-count="0" accept="image/*"  >
-					<!--视频-->
-					<input id="video" name="videoFile" type="file" multiple class="file" data-overwrite-initial="false" data-min-file-count="0" accept="video/mp4"  >
-					<!--音乐-->
-					<input id="music" name="musicFile" type="file" multiple class="file" data-overwrite-initial="false" data-min-file-count="0" accept="audio/*"  >
-
-					<button id="release" type="submit" class="btn btn-warning" style="float:right">&nbsp;&nbsp;&nbsp;&nbsp;发布&nbsp;&nbsp;&nbsp;&nbsp;</button>
-
-				</form>
-
-				<script>
-					//判断 输入内容是否为空 或者 为空格， 为空那么发布按钮为不可点击状态。
-          $("#content").blur(function(){
-            var content = $("#content").val();
-            var regu = "^[ ] + $";
-            var re = new RegExp(regu);
-            if(content == "" || content == null){
-              $("#content").css("backgroundColor","pink");
-              setTimeout(function(){$("#content").css("backgroundColor","white")},200);
-              $("#release").prop("disabled","disabled");
-            }else if(re.test(content)){
-              $("#content").css("backgroundColor","pink");
-              setTimeout(function(){$("#content").css("backgroundColor","white")},200);
-              $("#release").prop("disabled","disabled");
-						}else{
-              $("#release").prop("disabled",false);
-            }
-          })
-				</script>
-
+			<div class="lmlblog-member-header" style="text-align:center;vertical-align:middle;">
+        <li> <img src="images/search.png" width="160px" height="45px" alt="搜索"></li>
+					<form class="form-inline" method="get" action="/searchByPicture">
+						<input type="text" name="content" class="form-control" th:value="${searchContent}">
+						<button type="submit" class="btn btn-warning" >
+							<span class="glyphicon glyphicon-search" aria-hidden="true">&nbsp;搜索&nbsp;</span>
+						</button>
+					</form>
 			</div>
 
 
 			<!-- 微博内容 -->
 
 			<div class="lmlblog-member-menu clear">
-				<li class="on"><a href="/queryAll">全部</a></li>
-				<li><a href="/picture" >图片</a></li>
-				<li><a href="/video">视频</a></li>
-				<li><a href="/music" >音乐</a></li>
-				<li><a href="/article">文章</a></li>
+				<li ><a th:href="@{'/search?content='+${searchContent}}">综合</a></li>
+				<li><a th:href="@{'/searchByPerson?content='+${searchContent}}">找人</a></li>
+				<li class="on"><a th:href="@{'/searchByPicture?content='+${searchContent}}">图片</a></li>
+				<li><a th:href="@{'/searchByVideo?content='+${searchContent}}">视频</a></li>
+				<li><a th:href="@{'/searchByMusic?content='+${searchContent}}">音乐</a></li>
+				<li><a th:href="@{'/searchByArticle?content='+${searchContent}}">文章</a></li>
 			</div>
 			<div class="lmlblog-member-content-list clear">
 				<div class="lmlblog-member-left">
@@ -328,7 +276,7 @@
 
 									<div class="lmlblog-post-user-info-name">
 										<a href="#1">
-											<font style="color:#333; font-size:20px" th:text="${weibo.zfweibo.user.username}">司空琪</font>
+											<font style="color:#333; font-size:20px" th:text="${weibo.zfweibo.user.username}">李吉吉</font>
 										</a>
 										<!--th:text="${weibo.user.username}"-->
 										<span class="lmlblog-mark lmlblog-lv" title="经验：3815">Lv.6</span><span class="lmlblog-mark lmlblog-vip">VIP 6</span></div>
@@ -1008,6 +956,14 @@ layui.use('layer', function(){ //独立版的layer无需执行这一句
 	 }
 
 	</script>
+
+ /*
+  *
+    jadjk
+
+
+*/
+
 
 
 

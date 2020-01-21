@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import weibo.Service.*;
 import weibo.common.WeiboMethod;
 import weibo.pojo.User;
@@ -45,18 +44,6 @@ public class PageController {
     public String index() {
         return "redirect:/queryAll";
     }
-
-//    @GetMapping("/6")
-//    public String index02() {
-//        return "indexWebUpload-2";
-//    }
-//
-//    @GetMapping("/7")
-//    public String index03() {
-//        return "indexWebUpload";
-//    }
-
-
 
     @GetMapping("/article")
     @ApiOperation(value = "跳转到文章页面")
@@ -194,11 +181,6 @@ public class PageController {
         model.addAttribute("user",User);
         model.addAttribute("personalLabel",User.getpersonal_label());
         return "updatePersonInfo";
-    }
-
-    @RequestMapping("/demo")
-    public String demo(){
-        return "search2";
     }
 
 
