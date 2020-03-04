@@ -4,12 +4,16 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import weibo.Service.*;
+import weibo.WebSocket.WebSocketServer;
 import weibo.common.WeiboMethod;
 import weibo.pojo.*;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -41,6 +45,11 @@ public class WeiboController {
     @Autowired
     WeiboMethod method;
 
+    @Resource
+    private WebSocketServer webSocketServer;
+
+    @Autowired
+    messageService messageService;
 
     @RequestMapping(value = "/postWB")
     @ApiOperation(value = "发送微博")
@@ -150,8 +159,28 @@ public class WeiboController {
         Date postTime = new java.sql.Date(new java.util.Date().getTime());
         weibo.setPostTime(postTime);
         weibo.setZfwbid(weiboid);
-
         weiboService.post(weibo);
+
+//        通过websocket发送通知给本条微博者：
+//        本条微博作者的用户名
+        String userName = weiboService.getUsernameByWeiboID(weiboid);
+//        获取对该条微博点赞的实时总数量（当用户点击消息提示时清0）
+        int likeCount = userService.getLikeCount(userName);
+        int plCount = userService.getPlCount(userName);
+        int zfCount = userService.getZfCount(userName);
+//      转发后转发通知数量+1
+        zfCount++;
+        userService.updateZfCount(userName);
+        webSocketServer.sendInfo(userName, likeCount+","+plCount+","+zfCount);
+
+        //     添加一条转发通知
+        zfmessage message = new zfmessage();
+        message.setZfweibo(weiboid);
+        message.setZfusername(username);
+        message.setZfedusername(userName);
+        message.setZftime(new Date());
+        messageService.insetzfMessage(message);
+
         return "";
     }
 

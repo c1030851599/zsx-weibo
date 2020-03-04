@@ -3,10 +3,12 @@ package weibo.Service.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import weibo.Service.WeiboService;
+import weibo.mapper.userMapper;
 import weibo.mapper.weiboMapper;
 import weibo.pojo.User;
 import weibo.pojo.weibo;
 import weibo.pojo.weiboCustom;
+import weibo.pojo.zfweibo;
 
 import java.util.List;
 
@@ -15,6 +17,8 @@ public class WeiboServiceImpl implements WeiboService {
 
     @Autowired
     weiboMapper weiboMapper;
+    @Autowired
+    userMapper userMapper;
 
     @Override
     public void post(weibo weibo) throws Exception {
@@ -78,6 +82,12 @@ public class WeiboServiceImpl implements WeiboService {
         return weibo;
     }
 
+    @Override
+    public zfweibo queryweiboById(String id) {
+        zfweibo weibo = weiboMapper.queryweiboById(id);
+        return weibo;
+    }
+
 
     @Override
     public List<weiboCustom> queryByKeyWord(String content) {
@@ -107,6 +117,13 @@ public class WeiboServiceImpl implements WeiboService {
     public List<weiboCustom> queryAllWeiboByArticleKey(String content) {
         List<weiboCustom> weibos = weiboMapper.queryAllWeiboByArticleKey(content);
         return weibos;
+    }
+
+    @Override
+    public String getUsernameByWeiboID(String weiboID) {
+        Integer userid = weiboMapper.getUserIDByWeiboID(weiboID);
+        String s = userMapper.selectUserNameByID(userid);
+        return s;
     }
 
 

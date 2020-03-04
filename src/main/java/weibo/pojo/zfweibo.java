@@ -29,6 +29,10 @@ public class zfweibo {
 
     private String music;
 
+    private User user;
+    private String zfwbid;
+    private Integer zan;
+
     public User getUser() {
         return user;
     }
@@ -37,7 +41,6 @@ public class zfweibo {
         this.user = user;
     }
 
-    private User user;
 
     public String getZfwbid() {
         return zfwbid;
@@ -47,7 +50,6 @@ public class zfweibo {
         this.zfwbid = zfwbid;
     }
 
-    private String zfwbid;
 
     public Integer getZan() {
         return zan;
@@ -57,7 +59,7 @@ public class zfweibo {
         this.zan = zan;
     }
 
-    private Integer zan;
+
 
     public String getVideo() {
         return video;

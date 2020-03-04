@@ -41,8 +41,8 @@
 
 
         <!-- 数据库表名  及对应的   Java模型类名 -->
-        <table tableName="collect"
-               domainObjectName="collect"
+        <table tableName="plmessage"
+               domainObjectName="plmessage"
                enableCountByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false"

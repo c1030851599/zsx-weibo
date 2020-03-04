@@ -3,6 +3,7 @@ package weibo.mapper;
 import weibo.pojo.User;
 import weibo.pojo.weibo;
 import weibo.pojo.weiboCustom;
+import weibo.pojo.zfweibo;
 
 import java.util.List;
 
@@ -35,6 +36,8 @@ public interface weiboMapper {
 
     weiboCustom queryWeiboByID(String id);
 
+    zfweibo queryweiboById(String id);
+
     List<weiboCustom> queryByKey(String content);
 
     List<weiboCustom> queryAllWeiboByImgKey(String content);
@@ -44,4 +47,7 @@ public interface weiboMapper {
     List<weiboCustom> queryAllWeiboByMusicKey(String content);
 
     List<weiboCustom> queryAllWeiboByArticleKey(String content);
+
+    Integer getUserIDByWeiboID(String weiboid);
+
 }

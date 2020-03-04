@@ -101,6 +101,12 @@
             <version>1.3.4</version>
         </dependency>
 
+        <!--引入websocket依赖 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+
         <!--引入redis的starter          引入这个依赖为啥会报错？？？？？     -->
         <!--<dependency>-->
             <!--<groupId>org.springframework.boot</groupId>-->

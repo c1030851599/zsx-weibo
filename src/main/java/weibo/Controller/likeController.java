@@ -9,10 +9,15 @@ import org.springframework.web.bind.annotation.RestController;
 import weibo.Service.UserService;
 import weibo.Service.WeiboService;
 import weibo.Service.loveService;
+import weibo.Service.messageService;
+import weibo.WebSocket.WebSocketServer;
 import weibo.pojo.User;
+import weibo.pojo.likemessage;
 import weibo.pojo.love;
 import weibo.pojo.weibo;
 
+import javax.annotation.Resource;
+import java.util.Date;
 import java.util.UUID;
 
 @RestController
@@ -24,6 +29,11 @@ public class likeController {
     loveService likeService;
     @Autowired
     WeiboService weiboService;
+    @Resource
+    WebSocketServer webSocketServer;
+    @Autowired
+    messageService messageService;
+
 
     @GetMapping("/like")
     @ApiOperation(value = "点赞，给某条博客点赞")
@@ -51,8 +61,29 @@ public class likeController {
         weibo.setZan(Integer.parseInt(zCount));
         weibo weibo1 = weiboService.queryWeiboByID(weiboid);
         weibo.setPostTime(weibo1.getPostTime());
-
         weiboService.updateZanByPrimaryKey(weibo);
+
+//消息通知：---------------------------------------------------------------------------------
+//        本条微博作者的用户名
+        String userName = weiboService.getUsernameByWeiboID(weiboid);
+//        获取对该条微博点赞的实时总数量（当用户点击消息提示时清0）
+      int likeCount = userService.getLikeCount(userName);
+      int plCount = userService.getPlCount(userName);
+      int zfCount = userService.getZfCount(userName);
+//      点赞后点赞通知数量+1 并保存到数据库
+      likeCount++;
+      userService.updateLikeCount(userName);
+      //        通过websocket发送通知给本条微博者：
+      webSocketServer.sendInfo(userName, likeCount+","+plCount+","+zfCount);
+
+//     添加一条点赞通知
+        likemessage message = new likemessage();
+        message.setDzweibo(weiboid);
+        message.setLikeusername(username);
+        message.setLikedusername(userName);
+        message.setDztime(new Date());
+        messageService.insetLikeMessage(message);
+
         return "";
     }
 

@@ -113,5 +113,47 @@
     where username=#{username}
   </update>
 
+  <select id="selectUserNameByID" parameterType="java.lang.Integer" resultType="java.lang.String">
+    select username from user where id =#{id}
+  </select>
+
+  <select id="selectLikeCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select likeCount from user where username = #{username}
+  </select>
+
+  <select id="selectPLCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select plCount from user where username = #{username}
+  </select>
+
+  <select id="selectZFCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select zfCount from user where username = #{username}
+  </select>
+
+  <update id="updateLikeCount"  parameterType="java.lang.String">
+    update user set likeCount = likeCount + 1 where username = #{username}
+  </update>
+
+  <update id="setZero"  parameterType="java.lang.String">
+    update user set likeCount = 0 where username = #{username}
+  </update>
+
+  <update id="setplZero"  parameterType="java.lang.String">
+    update user set plCount = 0 where username = #{username}
+  </update>
+
+  <update id="setzfZero"  parameterType="java.lang.String">
+    update user set zfCount = 0 where username = #{username}
+  </update>
+
+  <update id="updatePLCount"  parameterType="java.lang.String">
+    update user set plCount = plCount + 1 where username = #{username}
+  </update>
+
+  <update id="updateZFCount"  parameterType="java.lang.String">
+    update user set zfCount = zfCount + 1 where username = #{username}
+  </update>
+
+
+
 
 </mapper>

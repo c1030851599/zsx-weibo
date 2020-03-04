@@ -3,6 +3,32 @@
 <mapper namespace="weibo.mapper.weiboMapper">
 
   <resultMap id="BaseResultMap" type="weibo.pojo.weiboCustom">
+  <id column="weibo_id" jdbcType="VARCHAR" property="weiboId" />
+  <result column="user_id" jdbcType="INTEGER" property="user.id" />
+  <result column="content" jdbcType="VARCHAR" property="content" />
+  <result column="postTime" jdbcType="TIMESTAMP" property="postTime" />
+  <result column="pic1" jdbcType="VARCHAR" property="pic1" />
+  <result column="pic2" jdbcType="VARCHAR" property="pic2" />
+  <result column="pic3" jdbcType="VARCHAR" property="pic3" />
+  <result column="pic4" jdbcType="VARCHAR" property="pic4" />
+  <result column="pic5" jdbcType="VARCHAR" property="pic5" />
+  <result column="pic6" jdbcType="VARCHAR" property="pic6" />
+  <result column="video" jdbcType="VARCHAR" property="video" />
+  <result column="music" jdbcType="VARCHAR" property="music" />
+  <result column="zan" jdbcType="INTEGER" property="zan" />
+  <result column="zfwbid" jdbcType="VARCHAR" property="zfwbid" />
+
+  <association property="user" javaType="weibo.pojo.User">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="headImgName" jdbcType="VARCHAR" property="headImgName" />
+    <result column="personal_label" jdbcType="VARCHAR" property="personal_label" />
+    <result column="gender" jdbcType="INTEGER" property="gender" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+  </association>
+</resultMap>
+
+  <resultMap id="BaseResultMap2" type="weibo.pojo.zfweibo">
     <id column="weibo_id" jdbcType="VARCHAR" property="weiboId" />
     <result column="user_id" jdbcType="INTEGER" property="user.id" />
     <result column="content" jdbcType="VARCHAR" property="content" />
@@ -29,10 +55,14 @@
   </resultMap>
 
 
+
   <sql id="Base_Column_List">
     weibo_id, user_id, content, postTime,pic1,pic2,pic3,pic4,pic5,pic6,video,music,zan,zfwbid
   </sql>
 
+  <sql id="Base_Column_List2">
+    weibo_id, user_id, content, postTime,pic1,pic2,pic3,pic4,pic5,pic6,video,music
+  </sql>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from weibo
@@ -274,6 +304,10 @@
     select user.*,weibo.* from weibo,user where weibo_id = #{weiboId,jdbcType=VARCHAR} and user.id = user_id
   </select>
 
+  <select id="queryweiboById" parameterType="java.lang.String" resultMap="BaseResultMap2">
+    select user.*,weibo.* from weibo,user where weibo_id = #{weiboId,jdbcType=VARCHAR} and user.id = user_id
+  </select>
+
   <select id="queryByKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select user.*,weibo.* from weibo,user
     <where>
@@ -322,5 +356,10 @@
       ORDER BY postTime DESC
     </where>
   </select>
+
+  <select id="getUserIDByWeiboID" parameterType="java.lang.String" resultType="java.lang.Integer">
+    SELECT user_id from weibo where weibo_id = #{weiboid};
+  </select>
+
 
 </mapper>

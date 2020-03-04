@@ -3,6 +3,8 @@ package weibo;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
+import weibo.WebSocket.WebSocketServer;
 
 @MapperScan(basePackages = "weibo.mapper")
 @SpringBootApplication
@@ -10,7 +12,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class WeiboApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(WeiboApplication.class, args);
+        ConfigurableApplicationContext applicationContext = SpringApplication.run(WeiboApplication.class, args);
+        //解决WebSocket不能注入的问题
+        WebSocketServer.setApplicationContext(applicationContext);
+
     }
 
 

@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+  <link rel="shortcut icon" href="images/tx.jpg" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>我的首页</title>
+
+
+  <link rel='stylesheet' id='lmlblog-css'  href='css/lmlblog.css' type='text/css' media='all' />
+  <link rel='stylesheet' id='all-css'  href='css/all.css' type='text/css' media='all' />
+  <script type='text/javascript' src='js/jquery.min.js'></script>
+  <script type='text/javascript' src='js/ueditor.all.min.js'></script>
+
+  <!--bootstrap-->
+  <link href="css/bootstrap.css" rel="stylesheet">
+  <link href="css/fileinput.css" media="all" rel="stylesheet" type="text/css" />
+  <link rel='stylesheet' id='style-css'  href='css/style.css' type='text/css' media='all' />
+  <link rel="stylesheet" href="jQueryWbPl/css/style.css">
+  <link rel="stylesheet" href="jQueryWbPl/css/comment.css">
+
+  <!--jq和上面那个冲突了，注释掉！-->
+  <!--<script src="js/jquery-2.0.3.min.js"></script>-->
+  <script src="js/fileinput.js" type="text/javascript"></script>
+  <script src="js/fileinput_locale_zh.js"></script>
+  <script src="js/bootstrap.js"></script>
+
+  <link rel="stylesheet" href="css/jquery.mCustomScrollbar.min.css"/>
+  <link rel="stylesheet" href="css/jquery.emoji.css"/>
+  <link rel="stylesheet" href="css/railscasts.css"/>
+  <link rel="stylesheet" href="css/index.css"/>
+
+  <script type="text/javascript" src="jQueryWbPl/js/jquery.flexText.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="jqueryDZ/css/style.css"/>
+
+  <!--layui-->
+  <link rel="stylesheet" th:href="@{layui/css/layui.css}">
+
+
+
+</head>
+<body>
+<!-- 菜单 -->
+<div th:replace="common/top::top"></div>
+<!-- menu-bar -->
+
+
+<div style="clear: both;"></div>
+<div class="lmlblog-member-main" data="1">
+  <div class="lmlblog-member-bg">
+    <div class="lmlblog-member-content">
+      <img th:src="@{headImgUpload/}+ ${session.user.headImgName}" class="avatar"  id="headImg" style="margin-top: 10px;display: none"	/>
+
+      <!--头部-->
+      <div class="lmlblog-member-header " style="text-align:center;vertical-align:middle;">
+        <div class="jumbotron">
+          <h1>点赞我的</h1>
+        </div>
+      </div>
+
+      <!-- 微博内容 -->
+      <div class="lmlblog-member-menu clear">
+      </div>
+
+      <div class="lmlblog-member-content-list clear">
+        <div class="lmlblog-member-left">
+
+          <!--热歌榜-->
+          <div class="lmlblog-member-left-bg-music clear">
+            <h3>亚洲新歌榜-内地</h3>
+            <div id="lmlblog-memeber-bg-music" class="aplayer"></div>
+            <img src="http://wx2.sinaimg.cn/large/9c774d91gy1ft4lhr5vbmg20jp08okbw.gif" alt="司空琪">
+            <!--<audio src="https://img.jinsom.cn/user_files/12551/bg-music/music_1530776683.mp3" autoplay controls></audio>-->
+          </div>
+
+          <!--热门话题-->
+          <div class="lmlblog-member-left-profile">
+            <h3>热门话题</h3>
+            <li><i class="fa fa-address-book-o"></i> I D：<span>520</span></li>
+            <li><i class="fa fa-transgender"></i> 性别：<span>女生</span></li>
+
+          </div>
+          <!--<div class="lmlblog-member-left-profile-more">查看更多 <i class="fa fa-angle-right"></i></div>-->
+          <!--</div>-->
+
+          <div class="lmlblog-member-left-visitor clear">
+            <h3>公告栏</h3>
+            <li>公告1</li>
+            <li>公告2</li>
+          </div>
+          <div class="lmlblog-member-left-bg-xg clear">
+            <h3>好友关注动态</h3>
+            6666666666666
+          </div>
+        </div>
+
+
+        <div class="lmlblog-member-right">
+          <div class="lmlblog-post-list">
+
+
+            <!--消息-->
+            <div class="lmlblog-posts-list words" style="background-image:url(images/003.png); " data="41890" th:each="weibo:${weibos}">
+              <!-- 动态内容部分，包括列表 -->
+              <div class="lmlblog-post-user-info">
+                <div class="lmlblog-post-user-info-avatar" user-data="1">
+                  <a href="#1" style="display: inline-block;">
+                    <!--头像-->
+                    <span class="lmlblog-vip-icon"></span>
+                    <img th:src="@{headImgUpload/}+ ${weibo.user.headImgName}" class="avatar"/>
+                    <i class="lmlblog-verify lmlblog-verify-a" th:title="${weibo.user.username}"></i></a>
+
+                  <div class="lmlblog-user-info-card">
+                    <div class="lmlblog-posts-list words" style="text-align: center;background-image:url(images/04.jpg); " >
+                      <img th:src="@{headImgUpload/}+ ${weibo.user.headImgName}" style="width:70px;height:70px;">
+                      <br><br>
+                      <a href="#1">
+                        <font style="color:#f5f5f5; font-size:20px" th:text="${weibo.user.username}">司空琪</font>
+                      </a>
+                      <br>
+                      <span th:class="${weibo.user.gender}==0?'lmlblog-mark lmlblog-boy':'lmlblog-mark lmlblog-girl' "><i class="fa fa-mars"></i></span>
+                      <span class="lmlblog-mark lmlblog-lv" title="经验：3815">Lv.6</span>
+                      <span class="lmlblog-mark lmlblog-vip">VIP 6</span>
+                    </div>
+                    <div style="text-align: center;">
+                      <font style="color:#black; font-size:15px" th:text="'简介： ' +${weibo.user.personalLabel}"></font><br><br>
+                      <font style="color:#black; font-size:15px" th:text="'地址： ' +${weibo.user.city}"></font>
+                    </div>
+                  </div>
+
+
+                </div>
+
+                <div class="lmlblog-post-user-info-name">
+                  <a href="#1">
+                    <font style="color:#333; font-size:20px" th:text="${weibo.user.username}">司空琪</font>
+                  </a>
+                  <!--th:text="${weibo.user.username}"-->
+                  <span class="lmlblog-mark lmlblog-lv" title="经验：3815">Lv.6</span><span class="lmlblog-mark lmlblog-vip">VIP 6</span></div>
+
+                <div class="lmlblog-post-user-info-time" th:text="${weibo.postTime}">12-12 03:10</div>
+              </div><!-- 作者信息 -->
+
+              <div class="lmlblog-post-setting">
+                <i class="fa fa-angle-down"></i>
+                <div  class="lmlblog-post-setting-box">
+                  <ul>
+                    <a href="#" title="查看全文"><li>查看全文</li></a>
+                    <a href="#1" title="访问主页"><li>访问主页</li></a>
+                  </ul>
+                </div>
+              </div>
+              <!--微博内容-->
+              <div class="lmlblog-post-content " name="sourceText" >
+                对你的微博点了赞！！
+              </div>
+
+              <!--图片-->
+              <div class="lmlblog-post-images-list clear">
+              </div>
+
+              <!--转发区域：：：-->
+              <div th:if = "${weibo.zfweibo} != null" class="all-pl-con hf-list-con" style="display: block;">
+
+                <!-- 动态内容部分，包括列表 -->
+                <div class="lmlblog-post-user-info">
+                  <div class="lmlblog-post-user-info-avatar" user-data="1">
+                    <a href="#1" style="display: inline-block;">
+                      <!--头像-->
+                      <span class="lmlblog-vip-icon"></span>
+                      <img th:src="@{headImgUpload/}+ ${weibo.zfweibo.user.headImgName}" class="avatar"/>
+                      <i class="lmlblog-verify lmlblog-verify-a" th:title="${weibo.zfweibo.user.username}"></i></a>
+                  </div>
+
+                  <div class="lmlblog-post-user-info-name">
+                    <a href="#1">
+                      <font style="color:#333; font-size:20px" th:text="${weibo.zfweibo.user.username}">李吉吉</font>
+                    </a>
+                    <!--th:text="${weibo.user.username}"-->
+                    <span class="lmlblog-mark lmlblog-lv" title="经验：3815">Lv.6</span><span class="lmlblog-mark lmlblog-vip">VIP 6</span></div>
+
+                  <div class="lmlblog-post-user-info-time" th:text="${#dates.format(weibo.zfweibo.postTime,'yyyy-MM-dd HH:mm:ss')}">12-12 03:10</div>
+
+                </div><!-- 作者信息 -->
+
+                <!--微博内容-->
+                <div class="lmlblog-post-content " name="sourceText"  th:text="${weibo.zfweibo.content}">
+
+
+                </div>
+
+                <!--图片-->
+                <div class="lmlblog-post-images-list clear">
+                  <a  th:if = "${weibo.zfweibo.pic1} != null"th:href="@{imgUpload/}+ ${weibo.zfweibo.pic1}" data-fancybox="gallery" data-caption='<i class="fa fa-copyright"></i> lmlblog'>
+                    <img th:if = "${weibo.zfweibo.pic1} != null" th:src="@{imgUpload/}+ ${weibo.zfweibo.pic1}" /></a>
+
+                  <a th:if = "${weibo.zfweibo.pic2} != null" th:href="@{imgUpload/}+ ${weibo.zfweibo.pic2}" data-fancybox="gallery" data-caption='<i class="fa fa-copyright"></i> lmlblog'>
+                    <img th:if = "${weibo.zfweibo.pic2} != null"  th:src="@{imgUpload/}+ ${weibo.zfweibo.pic2}" /></a>
+
+                  <a th:if = "${weibo.zfweibo.pic3} != null" th:href="@{imgUpload/}+ ${weibo.zfweibo.pic3}" data-fancybox="gallery" data-caption='<i class="fa fa-copyright"></i> lmlblog'>
+                    <img th:if = "${weibo.zfweibo.pic3} != null" th:src="@{imgUpload/}+ ${weibo.zfweibo.pic3}" /></a>
+
+                  <a th:if = "${weibo.zfweibo.pic4} != null" th:href="@{imgUpload/}+ ${weibo.zfweibo.pic4}" data-fancybox="gallery" data-caption='<i class="fa fa-copyright"></i> lmlblog'>
+                    <img th:if = "${weibo.zfweibo.pic4} != null" th:src="@{imgUpload/}+ ${weibo.zfweibo.pic4}" /></a>
+
+                  <a th:if = "${weibo.zfweibo.pic5} != null" th:href="@{imgUpload/}+ ${weibo.zfweibo.pic5}" data-fancybox="gallery" data-caption='<i class="fa fa-copyright"></i> lmlblog'>
+                    <img th:if = "${weibo.zfweibo.pic5} != null" th:src="@{imgUpload/}+ ${weibo.zfweibo.pic5}" /></a>
+
+                  <a th:if = "${weibo.zfweibo.pic6} != null" th:href="@{imgUpload/}+ ${weibo.zfweibo.pic6}" data-fancybox="gallery" data-caption='<i class="fa fa-copyright"></i> lmlblog'>
+                    <img th:if = "${weibo.zfweibo.pic6} != null" th:src="@{imgUpload/}+ ${weibo.zfweibo.pic6}" /></a>
+
+                </div>
+
+                <!--视频-->
+                <div class="lmlblog-post-content qi" th:if = "${weibo.zfweibo.video} != null">
+                  <P align=center><video th:src="@{videoUpload/}+ ${weibo.zfweibo.video}" width="630" height="325"  controls></video>	</p>
+                </div>
+
+                <!--音乐-->
+                <div  class="aplayer " th:if = "${weibo.zfweibo.music} != null">
+
+                  <!--<font style="color:#333; font-size:20px" th:text="${weibo.music}">司空琪</font>-->
+                  <p class="text-center bg-success">[[${weibo.zfweibo.music}]]</p>
+                  <p class="bg-success">
+                    <audio th:src="@{musicUpload/}+ ${weibo.zfweibo.music}"  controls class="center-block">
+                      <resource th:src="@{musicUpload/}+ ${weibo.zfweibo.music}"></resource>
+                    </audio></p>
+                </div>
+
+              </div>
+              <!--===================-->
+              <div class="lmlblog-post-like-list site-demo-button" id="layerDemo" style="margin-bottom: 0;">
+                <button style="visibility: hidden"></button>
+
+              </div>
+
+
+
+
+              <!-- posts_list -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 底部 -->
+    <div style="clear:both"></div>
+    <div class="footer">
+      <div class="footer_b_foot">
+        <div class="footer_b_top">
+        </div>
+        <div class="footer_b_bottom">Design by ZSX ,喜欢的请点个赞</div>
+      </div>
+    </div>
+    <!-- 返回顶部 -->
+    <a href="javascript:returnTop();" class="cd-top"></a>
+    <script type="text/javascript">
+      var sdelay=0;
+      function returnTop() {
+        window.scrollBy(0,-100);//Only for y vertical-axis
+        if(document.body.scrollTop>0) {
+          sdelay= setTimeout('returnTop()',50);
+        }
+      }
+    </script>
+
+  </div>
+</div>
+</body>
+<script type='text/javascript' src='js/base.js'></script>
+<script type='text/javascript' src='js/all.js'></script>
+<script type='text/javascript' src='js/plupload.full.min.js'></script>
+<script type='text/javascript' th:src="@{layui/layui.js}"></script>
+<!---------------------------->
+<script src="js/highlight.pack.js"></script>
+<script src="js/jquery.mousewheel-3.0.6.min.js"></script>
+<script src="js/jquery.mCustomScrollbar.min.js"></script>
+<script src="js/jquery.emoji.js"></script>
+<script>
+  $('#images-1').fileinput({
+    // <!--uploadUrl: '#',      // you must set a valid URL here else you will get an error-->
+    uploadAsync : true,           //默认异步上传
+    showUpload : false,           //是否显示上传按钮,跟随文本框的那个
+    allowedFileExtensions : ['jpg', 'png','gif'],
+    overwriteInitial: false,
+    maxFileSize: 100000 ,				//单位为kb，如果为0表示不限制文件大小
+    <!--限制上传6张-->
+    msgFilesTooMany: '选择上传的图片数量 超过允许的最大数值（6张）！',
+    <!--layoutTemplates:{-->
+    // <!--actionUpload:''					//去除上传预览缩略图中的上传图片-->
+    // <!--&lt;!&ndash;actionDownload:'' 			//去除上传预览缩略图中的下载图标&ndash;&gt;-->
+    // <!--&lt;!&ndash;actionDelete:'', 			//去除上传预览的缩略图中的删除图标&ndash;&gt;-->
+    // <!--},//对象用于渲染布局的每个部分的模板配置。您可以设置以下模板来控制窗口小部件布局.eg:去除上传图标-->
+    maxFileCount: 6,		 //表示允许同时上传的最大文件个数
+    showCaption: false,
+    dropZoneEnabled: false,
+    <!--注意：预览框的大小可以在fileinput.js中的defaultPreviewSettings中取设置！！ -->
+    <!--按钮-->
+    browseClass: 'btn btn-success',
+    browseLabel: '&nbsp;图片&nbsp;',
+    browseIcon: '<i class="glyphicon glyphicon-picture"></i> ',
+    removeClass: 'btn btn-danger',
+    removeLabel: '全部删除',
+    removeIcon: '<i class="glyphicon glyphicon-trash"></i> ',
+
+    uploadIcon: '<i class="glyphicon glyphicon-upload"></i> ',
+    slugCallback:function(filename) {
+      return filename.replace('(', '_').replace(']', '_');
+    }
+  });
+</script>
+
+<script>
+  $('#video').fileinput({
+    // <!--uploadUrl: '#',      // you must set a valid URL here else you will get an error-->
+    dropZoneTitle : '请上传小于150M的视频！',
+    uploadAsync : true,           //默认异步上传
+    showUpload : false,           //是否显示上传按钮,跟随文本框的那个
+    showCaption: true,				//是否显示标题
+    allowedFileExtensions : [ 'mp4'],
+    overwriteInitial: false,
+    maxFileSize: 153600 ,				//单位为kb，如果为0表示不限制文件大小
+    <!--限制上传-->
+    msgFilesTooMany: '选择上传的视频 超过允许的最大数值（1个）！',
+    maxFileCount: 1,		 //表示允许同时上传的最大文件个数
+    showCaption: false,
+    dropZoneEnabled: false,
+    <!--注意：预览框的大小可以在fileinput.js中的defaultPreviewSettings中取设置！！ -->
+    <!--按钮-->
+    browseClass: 'btn btn-info',
+    browseLabel: '&nbsp;视频&nbsp;',
+    browseIcon: '<i class="glyphicon glyphicon-facetime-video"></i> ',
+    removeClass: 'btn btn-danger',
+    removeLabel: '全部删除',
+    removeIcon: '<i class="glyphicon glyphicon-trash"></i> ',
+    uploadIcon: '<i class="glyphicon glyphicon-upload"></i> ',
+    slugCallback: function(filename) {
+      return filename.replace('(', '_').replace(']', '_');
+    }
+  });
+</script>
+
+<script>
+  $('#music').fileinput({
+    // <!--uploadUrl: '#',      // you must set a valid URL here else you will get an error-->
+    uploadAsync : true,           //默认异步上传
+    showUpload : false,           //是否显示上传按钮,跟随文本框的那个
+    allowedFileExtensions : ['mp3', 'mpeg','flac'],
+    overwriteInitial: false,
+    maxFileSize: 1000000,				//单位为kb，如果为0表示不限制文件大小
+    msgFilesTooMany: '选择上传的音乐数量 超过允许的最大数值（1首）！',
+    maxFileCount: 1,		 //表示允许同时上传的最大文件个数
+    showCaption: false,
+    dropZoneEnabled: false,
+    <!--注意：预览框的大小可以在fileinput.js中的defaultPreviewSettings中取设置！！ -->
+    <!--按钮-->
+    browseClass: 'btn btn-primary',
+    browseLabel: '&nbsp;音乐&nbsp;',
+    browseIcon: '<i class="glyphicon glyphicon-music"></i> ',
+    removeClass: 'btn btn-danger',
+    removeLabel: '全部删除',
+    removeIcon: '<i class="glyphicon glyphicon-trash"></i> ',
+    uploadIcon: '<i class="glyphicon glyphicon-upload"></i> ',
+    slugCallback: function(filename) {
+      return filename.replace('(', '_').replace(']', '_');
+    }
+  });
+</script>
+
+<script>
+  hljs.initHighlightingOnLoad();
+  $('#content').emoji({
+    button: '#btn666',
+    showTab: true,
+    animation: 'fade',
+    icons: [{
+      name: '魔性表情',
+      path: 'images/qq/',
+      maxNum: 165,
+      file: '.png',
+      placeholder: ':{alias}:'
+
+
+    }, {
+      name: 'GIF',
+      path: 'images/GIF/',
+      maxNum: 66,
+      excludeNums: [41, 45, 54],
+      file: '.gif',
+      placeholder: '#qq_{alias}#'
+    }]
+  });
+
+
+</script>
+
+<script>
+  $('div[name = \'sourceText\']').emojiParse({
+    icons: [{
+      path: 'images/qq/',
+      file: '.png',
+      placeholder: ':{alias}:'
+
+    }, {
+      path: 'images/GIF/',
+      file: '.gif',
+      placeholder: '#qq_{alias}#'
+    }]
+  });
+
+</script>
+
+
+<!--textarea高度自适应-->
+<script type="text/javascript">
+  $(function () {
+    $('.content').flexText();
+  });
+</script>
+<!--textarea限制字数-->
+<script type="text/javascript">
+  function keyUP(t){
+    var len = $(t).val().length;
+    if(len > 139){
+      $(t).val($(t).val().substring(0,140));
+    }
+  }
+</script>
+<!--点击评论创建评论条-->
+<script type="text/javascript">
+  $('.commentAll').on('click','.plBtn',function(weiboid){
+    var myDate = new Date();
+    //获取当前年
+    var year=myDate.getFullYear();
+    //获取当前月
+    var month=myDate.getMonth()+1;
+    //获取当前日
+    var date=myDate.getDate();
+    var h=myDate.getHours();       //获取当前小时数(0-23)
+    var m=myDate.getMinutes();     //获取当前分钟数(0-59)
+    if(m<10) m = '0' + m;
+    var s=myDate.getSeconds();
+    if(s<10) s = '0' + s;
+    //获取评论时间
+    var now=year+'-'+month+'-'+date+' '+h+':'+m+':'+s;
+    //获取输入内容
+    var oSize = $(this).siblings('.flex-text-wrap').find('.comment-input').val();
+    //获取评论用户名
+    var username = $('#username').text();
+    //获取本条微博的id
+    var weiboid = $(this).attr('id');
+    //获取发送人的头像：
+    var headImg = $('#headImg').attr('src');
+
+    console.log(oSize);
+    //动态创建评论模块
+    oHtml = '<div class="comment-show-con clearfix"><div class="comment-show-con-img pull-left"><img src="'+ headImg+'" alt=""></div> <div class="comment-show-con-list pull-left clearfix"><div class="pl-text clearfix"> <a href="#" class="comment-size-name">'+username+': </a> <span class="my-pl-con">&nbsp;'+ oSize +'</span> </div> <div class="date-dz"> <span class="date-dz-left pull-left comment-time">'+now+'</span> <div class="date-dz-right pull-right comment-pl-block"><a href="javascript:;" class="removeBlock">删除</a> <a href="javascript:;" class="date-dz-pl pl-hf hf-con-block pull-left">回复</a> <span class="pull-left date-dz-line">|</span> <a href="javascript:;" class="date-dz-z pull-left"><i class="date-dz-z-click-red"></i>赞 (<i class="z-num">666</i>)</a> </div> </div><div class="hf-list-con"></div></div> </div>';
+    if(oSize.replace(/(^\s*)|(\s*$)/g, '') != ''){
+      $(this).parents('.reviewArea ').siblings('.comment-show:first').prepend(oHtml);
+      $(this).siblings('.flex-text-wrap').find('.comment-input').prop('value','').siblings('pre').find('span').text('');
+    }
+    var data;
+    function a(data){
+
+    }
+
+
+    $.get('/pl?',{plContent:oSize,time:now,username:username,weiboid:weiboid},a(data));
+
+  });
+</script>
+<!--点击回复动态创建回复块-->
+<script type="text/javascript">
+  $('.comment-show').on('click','.pl-hf',function(){
+    var name = $(this).attr('name');
+
+    //获取回复人的名字
+    var fhName = $(this).parents('.date-dz-right').parents('.date-dz').siblings('.pl-text').find('.comment-size-name').text();
+    //回复@
+    var fhN = '回复@'+fhName;
+    //var oInput = $(this).parents('.date-dz-right').parents('.date-dz').siblings('.hf-con');
+    var fhHtml = '<div class="hf-con pull-left"> <textarea class="content comment-input hf-input" placeholder="" onkeyup="keyUP(this)"></textarea> <a href="javascript:;" class="hf-pl" id="'+ name+'" onclick="b(this)" >评论</a></div>';
+    //显示回复
+    if($(this).is('.hf-con-block')){
+      $(this).parents('.date-dz-right').parents('.date-dz').append(fhHtml);
+      $(this).removeClass('hf-con-block');
+      $('.content').flexText();
+      $(this).parents('.date-dz-right').siblings('.hf-con').find('.pre').css('padding','6px 15px');
+      //console.log($(this).parents('.date-dz-right').siblings('.hf-con').find('.pre'))
+      //input框自动聚焦
+      $(this).parents('.date-dz-right').siblings('.hf-con').find('.hf-input').val('').focus().val();
+    }else {
+      $(this).addClass('hf-con-block');
+      $(this).parents('.date-dz-right').siblings('.hf-con').remove();
+    }
+  });
+</script>
+<!--评论回复块创建-->
+<script type="text/javascript">
+  $('.comment-show').on('click','.hf-pl',function(){
+    var oThis = $(this);
+    var myDate = new Date();
+    //获取当前年
+    var year=myDate.getFullYear();
+    //获取当前月
+    var month=myDate.getMonth()+1;
+    //获取当前日
+    var date=myDate.getDate();
+    var h=myDate.getHours();       //获取当前小时数(0-23)
+    var m=myDate.getMinutes();     //获取当前分钟数(0-59)
+    if(m<10) m = '0' + m;
+    var s=myDate.getSeconds();
+    if(s<10) s = '0' + s;
+    //获取回复时间
+    var now=year+'-'+month+'-'+date+' '+h+':'+m+':'+s;
+    //获取输入内容
+    var oHfVal = $(this).siblings('.flex-text-wrap').find('.hf-input').val();
+    //获取回复的用户名
+    var username = $('#username').text();
+    //获取本条评论的id
+    var plid = $(this).attr('id');
+    //获取发送人的头像：
+    var headImg = $('#headImg').attr('src');
+
+    console.log(oHfVal);
+    var oHfName = $(this).parents('.hf-con').parents('.date-dz').siblings('.pl-text').find('.comment-size-name').html();
+    var oAllVal = '回复@'+oHfName;
+    if(oHfVal.replace(/^ +| +$/g,'') == '' || oHfVal == oAllVal){
+    }
+    else {
+
+
+      <!-- 回复名-->
+      var oHtml = '<div class="all-pl-con"><div class="pl-text hfpl-text clearfix"><div class="comment-show-con-img pull-left"><img src="'+ headImg+'" alt=""></div><a href="#" class="comment-size-name">'+username+' : (回复)</a><span class="my-pl-con">'+oHfVal+'</span></div><div class="date-dz"> <span class="date-dz-left pull-left comment-time">'+now+'</span> <div class="date-dz-right pull-right comment-pl-block"> <a href="javascript:;" class="removeBlock">删除</a> <span class="pull-left date-dz-line">|</span> <a href="javascript:;" class="date-dz-z pull-left"><i class="date-dz-z-click-red"></i>赞 (<i class="z-num">666</i>)</a> </div> </div></div>';
+      oThis.parents('.hf-con').parents('.comment-show-con-list').find('.hf-list-con').css('display','block').prepend(oHtml) && oThis.parents('.hf-con').siblings('.date-dz-right').find('.pl-hf').addClass('hf-con-block') && oThis.parents('.hf-con').remove();
+
+      var data;
+      function b(data){
+
+      }
+
+      $.get('/hfpl',{hfContent:oHfVal,time:now,username:username,plid:plid},b(data));
+
+    }
+  });
+</script>
+<!--删除评论块-->
+<script type="text/javascript">
+  $('.commentAll').on('click','.removeBlock',function(){
+    var oT = $(this).parents('.date-dz-right').parents('.date-dz').parents('.all-pl-con');
+    if(oT.siblings('.all-pl-con').length >= 1){
+      oT.remove();
+    }else {
+      $(this).parents('.date-dz-right').parents('.date-dz').parents('.all-pl-con').parents('.hf-list-con').css('display','none');
+      oT.remove();
+    }
+    $(this).parents('.date-dz-right').parents('.date-dz').parents('.comment-show-con-list').parents('.comment-show-con').remove();
+
+  });
+</script>
+<!--点赞-->
+<script type="text/javascript">
+  $('.comment-show').on('click','.date-dz-z',function(){
+    var zNum = $(this).find('.z-num').html();
+    if($(this).is('.date-dz-z-click')){
+      zNum--;
+      $(this).removeClass('date-dz-z-click red');
+      $(this).find('.z-num').html(zNum);
+      $(this).find('.date-dz-z-click-red').removeClass('red');
+    }else {
+      zNum++;
+      $(this).addClass('date-dz-z-click');
+      $(this).find('.z-num').html(zNum);
+      $(this).find('.date-dz-z-click-red').addClass('red');
+    }
+  });
+</script>
+
+<script>
+  function pl(a){
+    var id = 'pl' + a.id;
+    var b = document.getElementById(id);
+    $(b).slideToggle('fast');
+  }
+
+</script>
+<!--获取点赞按钮 和改变 其样式-->
+<script>
+
+  function like(a){
+
+    //获取本条微博的id
+    var weiboid = $(a).attr('name');
+
+    var A=$(a).attr('id');
+    var B=A.split('like');
+    var messageID=B[1];
+
+
+    var id = 'likeCount1' + weiboid;
+    var b = document.getElementById(id);
+
+    var C=parseInt($(b).text());
+
+    //获取点赞人的username
+    var username = $('#username').text();
+
+
+    $(a).css('background-position','');
+    var D=$(a).attr('rel');
+
+    if(D === 'like')
+    {
+      $(b).text(C+1);
+      $(a).addClass('heartAnimation').attr('rel','unlike');
+      $('#heart'+weiboid).attr('class','glyphicon glyphicon-heart');
+      $.get('/like',{zCount:C+1,username:username,weiboid:weiboid},function (data){
+
+      });
+    }
+    else
+    {
+      $(b).text(C-1);
+      $(a).removeClass('heartAnimation').attr('rel','like');
+      $('#heart'+weiboid).attr('class','glyphicon glyphicon-heart-empty');
+      $(a).css('background-position','left');
+      $.get('/unlike',{zCount:C-1,username:username,weiboid:weiboid},function (data){
+
+      });
+    }
+
+  }
+
+
+
+
+</script>
+
+<!--转发：-->
+<script>
+  layui.use('layer', function(){ //独立版的layer无需执行这一句
+    var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
+
+    //触发事件
+    var active = {
+      offset: function(othis){
+        var type = othis.data('type')
+            ,name = othis.attr('name')
+            ,id = 'zf' + name;
+        //获取回复的用户名
+        var username = $('#username').text();
+
+
+        layer.open({
+          type: 0
+          ,id:123
+          ,title:'转发微博'
+          ,area: ['520px', '300px']
+          ,offset: type //具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
+          ,id: 'layerDemo'+type //防止重复弹出
+          ,content: '<div><textarea id="'+ id +'" class="form-control" rows="4" style="width: 485px;height:110px" placeholder="说说你的看法…"></textarea></div>'
+          ,btn: '转发'
+          ,btnAlign: 'r' //按钮居右
+          ,shade: 0 //不显示遮罩
+          ,yes: function(){
+            var text = $(document.getElementById(id)).val();
+            //发送ajax请求
+            $.get('/zfWB',{zfContent:text,username:username,weiboid:name},function (data){});
+            layer.closeAll();
+            window.location.reload();
+          }
+        });
+      }
+    };
+
+    $('#layerDemo .layui-btn').on('click', function(){
+      var othis = $(this), method = othis.data('method');
+      active[method] ? active[method].call(this, othis) : '';
+    });
+
+  });
+</script>
+
+
+<!--获取收藏按钮 和改变 其样式-->
+<script>
+
+  function collect(a){
+
+    //获取本条微博的id
+    var weiboid = $(a).attr('name');
+
+    var A=$(a).attr('id');
+    var B=A.split('like');
+    var messageID=B[1];
+
+
+    var id = 'C' + weiboid;
+    var b = document.getElementById(id);
+
+
+    //获取收藏人的username
+    var username = $('#username').text();
+
+
+    $(a).css('background-position','');
+    var D=$(a).attr('rel');
+
+    if(D === 'collect')
+    {
+      $(b).text('已收藏');
+      $(a).addClass('heartAnimation').attr('rel','unCollect');
+      $('#collect'+weiboid).attr('class','glyphicon glyphicon-star');
+      $.get('/collect',{state:'已收藏',username:username,weiboid:weiboid},function (data){
+
+      });
+    }
+    else
+    {
+      $(b).text(' 收藏 ');
+      $(a).removeClass('heartAnimation').attr('rel','collect');
+      $('#collect'+weiboid).attr('class','glyphicon glyphicon-star-empty');
+      $(a).css('background-position','left');
+      $.get('/uncollect',{state:'收藏',username:username,weiboid:weiboid},function (data){
+
+      });
+    }
+
+  }
+
+</script>
+
+<!--webSocket 进行信息通知 -->
+<script type="text/javascript">
+  var websocket = null;
+  var username = $('#topUsername').text();
+  //判断当前浏览器是否支持WebSocket
+  if('WebSocket' in window){
+    websocket = new WebSocket('ws://localhost:8000/socket/'+username);
+  } else {
+    alert('当前浏览器 Not support websocket');
+  }
+
+  //连接发生错误的回调方法
+  websocket.onerror = function () {
+    setMessageInnerHTML('WebSocket连接发生错误');
+  };
+
+  //连接成功建立的回调方法
+  websocket.onopen = function () {
+    setMessageInnerHTML('');
+  };
+
+  //接收到消息的回调方法
+  websocket.onmessage = function (event) {
+    setMessageInnerHTML(event.data);
+  };
+
+  //连接关闭的回调方法
+  websocket.onclose = function () {
+    setMessageInnerHTML('WebSocket连接关闭');
+  };
+
+  //监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
+  window.onbeforeunload = function () {
+    closeWebSocket();
+  };
+
+  //将消息显示在网页上
+  function setMessageInnerHTML(innerHTML) {
+    var arr = innerHTML.split(",");
+    var likeNum = parseInt(arr[0]);
+    var plNum = parseInt(arr[1]);
+    var zfNum = parseInt(arr[2]);
+
+    var count = likeNum + plNum + zfNum;
+    //总消息通知
+    if (0 !== count && !isNaN(count)) {
+      $('#message').text(count);
+      $('#message').css("display","")
+    };
+    //点赞通知
+    if (arr[0] !== "0" && !isNaN(arr[0])) {
+      $('#likeMessage').text(arr[0]);
+      $('#likeMessage').css("display","")
+    };
+    //评论通知
+    if ("0" !== arr[1] && !isNaN(arr[1])) {
+      $('#plMessage').text(arr[1]);
+      $('#plMessage').css("display","")
+    };
+    //转发通知
+    if ("0" !== arr[2] && !isNaN(arr[2])) {
+      $('#zfMessage').text(arr[2]);
+      $('#zfMessage').css("display","")
+    };
+
+  }
+
+  //关闭WebSocket连接
+  function closeWebSocket() {
+    websocket.close();
+  }
+
+  //发送消息
+  function send() {
+    var message = document.getElementById('text').value;
+    websocket.send(message);
+  }
+</script>
+
+</html>

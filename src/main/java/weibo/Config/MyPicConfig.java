@@ -4,6 +4,7 @@ package weibo.Config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
@@ -16,4 +17,17 @@ public class MyPicConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/musicUpload/**").addResourceLocations("file:E:/lidea编程项目/毕业设计项目（微博）/src/main/resources/static/musicUpload/");
 
     }
+
+
+    /**
+     * 为各个页面提供路径映射
+     * @param registry
+     */
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/client").setViewName("websocket_client");
+        registry.addViewController("/service").setViewName("websocket_service");
+    }
+
+
 }

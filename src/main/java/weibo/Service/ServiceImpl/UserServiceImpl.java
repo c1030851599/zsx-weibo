@@ -6,8 +6,9 @@ import weibo.Service.UserService;
 import weibo.mapper.userMapper;
 import weibo.pojo.User;
 
-@Service
+@Service("UserService")
 public class UserServiceImpl implements UserService {
+
 
     @Autowired
     userMapper userMapper;
@@ -40,5 +41,49 @@ public class UserServiceImpl implements UserService {
         userMapper.updateInfo(user);
     }
 
+    @Override
+    public Integer getPlCount(String Username) {
+        return userMapper.selectPLCount(Username);
+    }
+
+    @Override
+    public Integer getLikeCount(String Username) {
+        return userMapper.selectLikeCount(Username);
+    }
+
+    @Override
+    public Integer getZfCount(String Username) {
+        return userMapper.selectZFCount(Username);
+    }
+
+    @Override
+    public void updateLikeCount(String userName) {
+         userMapper.updateLikeCount(userName);
+    }
+
+    @Override
+    public void updateZero(String userName) {
+        userMapper.setZero(userName);
+    }
+
+    @Override
+    public void updatePlCount(String userName) {
+         userMapper.updatePLCount(userName);
+    }
+
+    @Override
+    public void updatePlZero(String userName) {
+        userMapper.setplZero(userName);
+    }
+
+    @Override
+    public void updateZfCount(String userName) {
+         userMapper.updateZFCount(userName);
+    }
+
+    @Override
+    public void updateZfZero(String userName) {
+        userMapper.setzfZero(userName);
+    }
 
 }

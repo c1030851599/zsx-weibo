@@ -3,6 +3,7 @@ package weibo.Service;
 import weibo.pojo.User;
 import weibo.pojo.weibo;
 import weibo.pojo.weiboCustom;
+import weibo.pojo.zfweibo;
 
 import java.util.List;
 
@@ -36,6 +37,8 @@ public interface WeiboService {
 
     weiboCustom queryWeiboByID(String id);
 
+    zfweibo queryweiboById(String id);
+
 //    查询微博(某条)
     List<weiboCustom> queryByKeyWord(String content);
 
@@ -51,5 +54,9 @@ public interface WeiboService {
 
     //    查询带有文字的微博列表
     List<weiboCustom> queryAllWeiboByArticleKey(String content);
+
+//    通过微博id获取本条微博的用户名
+    String getUsernameByWeiboID(String weiboID);
+
 
 }

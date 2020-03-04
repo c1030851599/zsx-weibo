@@ -4,11 +4,14 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import weibo.Service.UserService;
+import weibo.Service.*;
+import weibo.WebSocket.WebSocketServer;
 import weibo.pojo.User;
 import weibo.pojo.hfplList;
 import weibo.pojo.plList;
+import weibo.pojo.plmessage;
 
+import javax.annotation.Resource;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -21,11 +24,19 @@ public class plController {
     UserService userService;
 
     @Autowired
-    weibo.Service.plListService plListService;
+    plListService plListService;
 
     @Autowired
-    weibo.Service.hfplListService hfplListService;
+    WeiboService weiboService;
 
+    @Autowired
+    hfplListService hfplListService;
+
+    @Resource
+    private WebSocketServer webSocketServer;
+
+    @Autowired
+    messageService messageService;
 
     @GetMapping("/pl")
     @ApiOperation(value = "评论")
@@ -43,8 +54,29 @@ public class plController {
         Date date = sdf.parse(time);
         plList.setPltime(date);
         plList.setWeiboid(weiboid);
-
         plListService.insert(plList);
+
+        //        通过websocket发送通知给本条微博者：
+//        本条微博作者的用户名
+        String userName = weiboService.getUsernameByWeiboID(weiboid);
+//        获取对该条微博点赞的实时总数量（当用户点击消息提示时清0）
+        int likeCount = userService.getLikeCount(userName);
+        int plCount = userService.getPlCount(userName);
+        int zfCount = userService.getZfCount(userName);
+//      评论后评论通知数量+1
+        plCount++;
+        userService.updatePlCount(userName);
+        webSocketServer.sendInfo(userName, likeCount+","+plCount+","+zfCount);
+
+        //     添加一条评论通知
+        plmessage message = new plmessage();
+        message.setPlweibo(weiboid);
+        message.setPlusername(username);
+        message.setPledusername(userName);
+        message.setPlcontent(plContent);
+        message.setPltime(new Date());
+        messageService.insetplMessage(message);
+
         return "";
     }
 
