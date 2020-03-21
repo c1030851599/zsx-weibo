@@ -103,6 +103,10 @@
     select * from user where username=#{username}
   </select>
 
+  <select id="findUserById" parameterType="java.lang.Integer" resultType="weibo.pojo.User">
+    select * from user where id=#{id}
+  </select>
+
   <update id="updateHeadImg" parameterType="weibo.pojo.User">
     update user set headImgName = #{headImgName,jdbcType=VARCHAR} where username=#{username}
   </update>
@@ -153,7 +157,9 @@
     update user set zfCount = zfCount + 1 where username = #{username}
   </update>
 
-
+<select id="findPerson" parameterType="java.lang.String" resultType="weibo.pojo.User">
+  select * from user where username like  concat('%',#{content},'%')
+</select>
 
 
 </mapper>

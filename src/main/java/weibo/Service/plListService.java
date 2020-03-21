@@ -7,4 +7,7 @@ import java.util.List;
 public interface plListService {
     void insert(plList record);
     List<plList> selectByWeiboId(String weiboid);
+
+    String queryWeiboId(String plId);
+
 }

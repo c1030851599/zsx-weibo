@@ -3,12 +3,17 @@ package weibo.Service.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import weibo.Service.UserService;
+import weibo.mapper.gzMapper;
 import weibo.mapper.userMapper;
 import weibo.pojo.User;
+import weibo.pojo.gz;
+
+import java.util.List;
 
 @Service("UserService")
 public class UserServiceImpl implements UserService {
-
+    @Autowired
+    gzMapper gzMapper;
 
     @Autowired
     userMapper userMapper;
@@ -29,6 +34,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findUser(String username) {
         return userMapper.findUser(username);
+    }
+
+    @Override
+    public User findUserById(Integer id) {
+        return userMapper.findUserById(id);
     }
 
     @Override
@@ -85,5 +95,31 @@ public class UserServiceImpl implements UserService {
     public void updateZfZero(String userName) {
         userMapper.setzfZero(userName);
     }
+
+    @Override
+    public boolean ifGZ(gz gz) {
+        gz result = gzMapper.ifGZ(gz);
+        if (result == null){
+            return false;
+        }else {
+            return true;
+        }
+    }
+
+    @Override
+    public void saveGz(gz gz) {
+        gzMapper.insert(gz);
+    }
+
+    @Override
+    public void cancelGz(gz gz) {
+        gzMapper.deleteGz(gz);
+    }
+
+    @Override
+    public List<User> searchperson(String content) {
+        return userMapper.findPerson(content);
+    }
+
 
 }

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="zh-CN">
 <head>
 	<meta charset="utf-8">
@@ -58,6 +58,7 @@
 		<div class="lmlblog-member-content2">
 			<form method="post" action="/headImg" enctype="multipart/form-data" class="text-center">
 				<input id="headImg" name="headImg" type="file" multiple class="file" data-overwrite-initial="false" data-min-file-count="0" accept="image/*"  >
+				<!--<img th:src="@{headImgUpload/}+ ${session.user.headImgName}" id="zzzheadImg" class="avatar"/>-->
 				<button type="submit" class="btn btn-warning">
 					<span class="glyphicon glyphicon-upload" aria-hidden="true">&nbsp;上传&nbsp;</span>
 				</button>
@@ -78,9 +79,6 @@
 				<div class="lmlblog-member-desc">[[${personalLabel}]]</div>
 				<div class="lmlblog-member-follow-info">
 
-
-					<a href="https://weibo.com/u/6077164061" target="_blank" rel="nofollow"><span class="follow no opacity"><i class="lmlblog-icon"></i>+ 关注</span></a>
-					<span class="opacity"><i class="lmlblog-icon">&#xe612;</i> 私聊</span>
 				</div>
 				<!--<br>-->
 
@@ -190,7 +188,7 @@
 											<span class="lmlblog-mark lmlblog-vip">VIP 6</span>
 										</div>
 										<div style="text-align: center;">
-											<font style="color:#black; font-size:15px" th:text="'简介： ' +${session.user.personalLabel}"></font><br><br>
+											<font style="color:#black; font-size:15px" th:text="'简介： ' +${personalLabel}"></font><br><br>
 											<font style="color:#black; font-size:15px" th:text="'地址： ' +${session.user.city}"></font>
 										</div>
 									</div>

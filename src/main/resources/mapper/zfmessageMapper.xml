@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="weibo.mapper.zfmessageMapper">
+  <resultMap id="BaseResultMap" type="weibo.pojo.zfmessage">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="zfUsername" jdbcType="VARCHAR" property="zfusername" />
+    <result column="zfedUsername" jdbcType="VARCHAR" property="zfedusername" />
+    <result column="zfWeibo" jdbcType="VARCHAR" property="zfweibo" />
+    <result column="zfTime" jdbcType="TIMESTAMP" property="zftime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, zfUsername, zfedUsername, zfWeibo, zfTime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from zfmessage
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from zfmessage
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="weibo.pojo.zfmessage">
+    insert into zfmessage (id, zfUsername, zfedUsername, 
+      zfWeibo, zfTime)
+    values (#{id,jdbcType=INTEGER}, #{zfusername,jdbcType=VARCHAR}, #{zfedusername,jdbcType=VARCHAR}, 
+      #{zfweibo,jdbcType=VARCHAR}, #{zftime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="weibo.pojo.zfmessage">
+    insert into zfmessage
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="zfusername != null">
+        zfUsername,
+      </if>
+      <if test="zfedusername != null">
+        zfedUsername,
+      </if>
+      <if test="zfweibo != null">
+        zfWeibo,
+      </if>
+      <if test="zftime != null">
+        zfTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="zfusername != null">
+        #{zfusername,jdbcType=VARCHAR},
+      </if>
+      <if test="zfedusername != null">
+        #{zfedusername,jdbcType=VARCHAR},
+      </if>
+      <if test="zfweibo != null">
+        #{zfweibo,jdbcType=VARCHAR},
+      </if>
+      <if test="zftime != null">
+        #{zftime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="weibo.pojo.zfmessage">
+    update zfmessage
+    <set>
+      <if test="zfusername != null">
+        zfUsername = #{zfusername,jdbcType=VARCHAR},
+      </if>
+      <if test="zfedusername != null">
+        zfedUsername = #{zfedusername,jdbcType=VARCHAR},
+      </if>
+      <if test="zfweibo != null">
+        zfWeibo = #{zfweibo,jdbcType=VARCHAR},
+      </if>
+      <if test="zftime != null">
+        zfTime = #{zftime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="weibo.pojo.zfmessage">
+    update zfmessage
+    set zfUsername = #{zfusername,jdbcType=VARCHAR},
+      zfedUsername = #{zfedusername,jdbcType=VARCHAR},
+      zfWeibo = #{zfweibo,jdbcType=VARCHAR},
+      zfTime = #{zftime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectAll" parameterType="java.lang.String" resultType="weibo.pojo.zfmessage">
+    select * from zfmessage where zfedUsername = #{username} order by zfTime desc
+  </select>
+
+
+</mapper>

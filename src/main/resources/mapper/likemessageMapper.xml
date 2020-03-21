@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="weibo.mapper.likemessageMapper">
+  <resultMap id="BaseResultMap" type="weibo.pojo.likemessage">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="likeUserName" jdbcType="VARCHAR" property="likeusername" />
+    <result column="likedUsername" jdbcType="VARCHAR" property="likedusername" />
+    <result column="dzWeibo" jdbcType="VARCHAR" property="dzweibo" />
+    <result column="dzTime" jdbcType="TIMESTAMP" property="dztime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, likeUserName, likedUsername, dzWeibo, dzTime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from likemessage
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from likemessage
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="weibo.pojo.likemessage">
+    insert into likemessage (id, likeUserName, likedUsername, 
+      dzWeibo, dzTime)
+    values (#{id,jdbcType=INTEGER}, #{likeusername,jdbcType=VARCHAR}, #{likedusername,jdbcType=VARCHAR}, 
+      #{dzweibo,jdbcType=VARCHAR}, #{dztime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="weibo.pojo.likemessage">
+    insert into likemessage
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="likeusername != null">
+        likeUserName,
+      </if>
+      <if test="likedusername != null">
+        likedUsername,
+      </if>
+      <if test="dzweibo != null">
+        dzWeibo,
+      </if>
+      <if test="dztime != null">
+        dzTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="likeusername != null">
+        #{likeusername,jdbcType=VARCHAR},
+      </if>
+      <if test="likedusername != null">
+        #{likedusername,jdbcType=VARCHAR},
+      </if>
+      <if test="dzweibo != null">
+        #{dzweibo,jdbcType=VARCHAR},
+      </if>
+      <if test="dztime != null">
+        #{dztime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="weibo.pojo.likemessage">
+    update likemessage
+    <set>
+      <if test="likeusername != null">
+        likeUserName = #{likeusername,jdbcType=VARCHAR},
+      </if>
+      <if test="likedusername != null">
+        likedUsername = #{likedusername,jdbcType=VARCHAR},
+      </if>
+      <if test="dzweibo != null">
+        dzWeibo = #{dzweibo,jdbcType=VARCHAR},
+      </if>
+      <if test="dztime != null">
+        dzTime = #{dztime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="weibo.pojo.likemessage">
+    update likemessage
+    set likeUserName = #{likeusername,jdbcType=VARCHAR},
+      likedUsername = #{likedusername,jdbcType=VARCHAR},
+      dzWeibo = #{dzweibo,jdbcType=VARCHAR},
+      dzTime = #{dztime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectAll" parameterType="java.lang.String" resultType="weibo.pojo.likemessage">
+    select * from likemessage where likedUsername = #{username} order by dzTime desc
+  </select>
+
+
+
+</mapper>

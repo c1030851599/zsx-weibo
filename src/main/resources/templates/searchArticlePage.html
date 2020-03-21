@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="zh-CN">
 <head>
 	<meta charset="utf-8">
@@ -97,14 +97,7 @@
 					</div>
 
 					<!--热门话题-->
-					<div class="lmlblog-member-left-profile">
-						<h3>热门话题</h3>
-						<li><i class="fa fa-address-book-o"></i> I D：<span>520</span></li>
-						<li><i class="fa fa-transgender"></i> 性别：<span>女生</span></li>
-
-					</div>
-					<!--<div class="lmlblog-member-left-profile-more">查看更多 <i class="fa fa-angle-right"></i></div>-->
-					<!--</div>-->
+					<div th:replace="common/hot::hot"></div>
 
 					<div class="lmlblog-member-left-visitor clear">
 						<h3>公告栏</h3>

@@ -2,9 +2,11 @@ package weibo.Controller;
 
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,6 +19,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -50,6 +53,11 @@ public class WeiboController {
 
     @Autowired
     messageService messageService;
+
+    @Autowired
+    RedisTemplate<Object,String> redisTemplate;
+    @Autowired
+    hotService hotService;
 
     @RequestMapping(value = "/postWB")
     @ApiOperation(value = "发送微博")
@@ -181,6 +189,15 @@ public class WeiboController {
         message.setZftime(new Date());
         messageService.insetzfMessage(message);
 
+        //   热点微博：——————————————————————————————————
+//      获取分数值：  (不能存微博对象，因为存进redis时同一条微博就为两个不同的对象了（new 时为不同对象了），这样无法对同一条微博 作)
+        Double score = redisTemplate.opsForZSet().score("hot", weiboid);
+//      将这条微博加入到redis
+        if (score == null || score == 0 ){
+            redisTemplate.opsForZSet().add("hot",weiboid,1);
+        } else {
+            redisTemplate.opsForZSet().add("hot",weiboid,score+1);
+        }
         return "";
     }
 
@@ -198,8 +215,11 @@ public class WeiboController {
 
         List<weiboCustom> weibos1 = method.getWeibos(weibos,collect,love);
 
+        List<hotWeibo> hotWeibo = hotService.getHotWeibo();
+
         model.addAttribute("weibos", weibos1);
         model.addAttribute("personalLabel",user.getpersonal_label());
+        model.addAttribute("hotWeibos",hotWeibo);
         return "/index";
     }
 
@@ -218,7 +238,6 @@ public class WeiboController {
             String timeFormat = sdf.format(postTime);
             weibo.setPostTimeAsString(timeFormat);
         }
-
 
         model.addAttribute("weibos", weibos);
 
@@ -255,8 +274,33 @@ public class WeiboController {
         userService.updateHeadImg(user);
 
         return "redirect:/person";
-
     }
+
+
+    @ApiOperation(value = "查询指定微博")
+    @RequestMapping("/query/{weiboId}")
+    public String queryHotWeibo(HttpSession session,@PathVariable("weiboId") String weiboId,Model model){
+        // 当前用户信息
+        User user = (User) session.getAttribute("user");
+        List<weiboCustom> weibos =  new ArrayList<>();
+        weibos.add(weiboService.queryWeiboByID(weiboId));
+        love love = new love();
+        love.setUserid(user.getId());
+        collect collect = new collect();
+        collect.setUserid(user.getId());
+
+        List<weiboCustom> weibos1 = method.getWeibos(weibos,collect,love);
+
+        List<hotWeibo> hotWeibo = hotService.getHotWeibo();
+
+        model.addAttribute("weibos", weibos1);
+        model.addAttribute("personalLabel",user.getpersonal_label());
+        model.addAttribute("hotWeibos",hotWeibo);
+
+        return "/index";
+    }
+
+
 
 
 

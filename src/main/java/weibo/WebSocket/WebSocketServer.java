@@ -23,7 +23,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @ServerEndpoint(value = "/socket/{username}")
 public class WebSocketServer {
   //此处是解决无法注入的关键
-  private static ApplicationContext applicationContext;
+   static ApplicationContext applicationContext;
 
   //静态变量，用来记录当前在线连接数。应该把它设计成线程安全的。
   private static AtomicInteger online = new AtomicInteger();

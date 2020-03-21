@@ -107,16 +107,16 @@
             <artifactId>spring-boot-starter-websocket</artifactId>
         </dependency>
 
-        <!--引入redis的starter          引入这个依赖为啥会报错？？？？？     -->
-        <!--<dependency>-->
-            <!--<groupId>org.springframework.boot</groupId>-->
-            <!--<artifactId>spring-boot-starter-data-redis</artifactId>-->
-        <!--</dependency>-->
+        <!--引入redis的starter          引入这个依赖为啥会报错？？？？？ (已解决：https://blog.csdn.net/m0_37783096/article/details/90767755)    -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>org.springframework.boot</groupId>-->
-            <!--<artifactId>spring-boot-starter-cache</artifactId>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId>
+        </dependency>
 
         <!--mysql-->
         <dependency>

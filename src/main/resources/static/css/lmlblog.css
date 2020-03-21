@@ -1,4 +1,4 @@
-﻿.opacity:hover{
+﻿﻿.opacity:hover{
     opacity: 0.8;
 }
 .clear:after{
@@ -184,6 +184,10 @@
 }
 .lmlblog-member-follow-info {
     text-align: center;
+    margin-top: 15px;
+}
+.lmlblog-member-follow-info2 {
+    text-align: left;
     margin-top: 15px;
 }
 .lmlblog-member-follow-info span {
@@ -1700,6 +1704,13 @@ img.wp-smiley {
     border-radius: 100%;
     border: 1px solid #f3f3f3;
 }
+.lmlblog-post-user-info-avatar img.avatar2 {
+    height:110px;
+    width: 110px;
+    vertical-align: middle;
+    border-radius: 100%;
+    border: 1px solid #f3f3f3;
+}
 .lmlblog-user-info-card {
     width: 375px;
     height: 240px;
@@ -1714,6 +1725,10 @@ img.wp-smiley {
 }
 .lmlblog-post-user-info-name {
     margin-left: 50px;
+    width: 100%;
+}
+.lmlblog-post-user-info-name2 {
+    margin-left: 60px;
     width: 100%;
 }
 .lmlblog-post-user-info-time {

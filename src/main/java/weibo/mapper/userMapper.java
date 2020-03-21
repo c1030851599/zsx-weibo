@@ -1,37 +1,44 @@
 package weibo.mapper;
 
 import weibo.pojo.User;
+
+import java.util.List;
+
 public interface userMapper {
-    int insert(User record);
+        int insert(User record);
 
-    int insertSelective(User record);
+        int insertSelective(User record);
 
-    User login(User user);
+        User login(User user);
 
-    User findUser(String username);
+        User findUser(String username);
 
-    void updateHeadImg(User user);
+        User findUserById(Integer id);
 
-    void updateInfo(User user);
+        void updateHeadImg(User user);
 
-    String selectUserNameByID(Integer id);
+        void updateInfo(User user);
 
-    Integer selectLikeCount(String username);
+        String selectUserNameByID(Integer id);
 
-    Integer selectPLCount(String username);
+        Integer selectLikeCount(String username);
 
-    Integer selectZFCount(String username);
+        Integer selectPLCount(String username);
 
-    void updateLikeCount(String username);
+        Integer selectZFCount(String username);
 
-    void setZero(String username);
+        void updateLikeCount(String username);
 
-    void updatePLCount(String username);
+        void setZero(String username);
 
-    void setplZero(String username);
+        void updatePLCount(String username);
 
-    void updateZFCount(String username);
+        void setplZero(String username);
 
-    void setzfZero(String username);
+        void updateZFCount(String username);
+
+        void setzfZero(String username);
+
+        List<User> findPerson(String keyWord);
 
 }

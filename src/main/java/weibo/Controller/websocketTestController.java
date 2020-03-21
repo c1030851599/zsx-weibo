@@ -27,6 +27,20 @@ public class websocketTestController {
 
 
   /**
+   * 给指定用户推送消息
+   * @param userName 用户名
+   * @param message 消息
+   * @throws IOException
+   */
+  @RequestMapping(value = "/socket/weChat", method = RequestMethod.GET)
+  public void talkSocket1(@RequestParam String userName, @RequestParam String message){
+    webSocketServer.sendInfo(userName, message);
+  }
+
+
+
+
+  /**
    * 给所有用户推送消息
    * @param message 消息
    * @throws IOException

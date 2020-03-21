@@ -1,6 +1,7 @@
 package weibo.Service.ServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import weibo.Service.WeiboService;
 import weibo.mapper.userMapper;
@@ -19,6 +20,8 @@ public class WeiboServiceImpl implements WeiboService {
     weiboMapper weiboMapper;
     @Autowired
     userMapper userMapper;
+    @Autowired
+    RedisTemplate redisTemplate;
 
     @Override
     public void post(weibo weibo) throws Exception {

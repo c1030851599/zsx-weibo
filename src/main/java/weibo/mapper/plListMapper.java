@@ -18,4 +18,7 @@ public interface plListMapper {
     int updateByPrimaryKey(plList record);
 
     List<plList> selectByWeiboId(String weiboid);
+
+    String selectWeiboIdByPlId(String pl);
+
 }

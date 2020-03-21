@@ -112,6 +112,11 @@
     where weiboid = #{weiboid,jdbcType=VARCHAR}  ORDER BY plTime DESC
   </select>
 
-
+  <select id="selectWeiboIdByPlId" parameterType="java.lang.String" resultType="java.lang.String">
+    select
+    weiboid
+    from pllist
+    where id = #{pl,jdbcType=VARCHAR}
+  </select>
 
 </mapper>

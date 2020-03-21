@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class weibo implements Serializable {
+    //    序列化值不同，所以重新修改。
+    private static final long serialVersionUID = 6427774415406558904L;
     private String weiboId;
 
     private Integer userId;

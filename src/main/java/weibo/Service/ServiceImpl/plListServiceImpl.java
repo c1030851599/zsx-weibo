@@ -24,4 +24,9 @@ public class plListServiceImpl implements plListService {
         List<plList> plList = (List<weibo.pojo.plList>) plListMapper.selectByWeiboId(weiboid);
         return plList;
     }
+
+    @Override
+    public String queryWeiboId(String plId) {
+        return plListMapper.selectWeiboIdByPlId(plId);
+    }
 }

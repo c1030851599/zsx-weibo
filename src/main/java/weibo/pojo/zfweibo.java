@@ -1,8 +1,9 @@
 package weibo.pojo;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class zfweibo {
+public class zfweibo implements Serializable {
     private String weiboId;
 
     private Integer userId;

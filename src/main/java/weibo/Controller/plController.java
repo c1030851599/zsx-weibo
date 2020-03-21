@@ -2,14 +2,12 @@ package weibo.Controller;
 
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import weibo.Service.*;
 import weibo.WebSocket.WebSocketServer;
-import weibo.pojo.User;
-import weibo.pojo.hfplList;
-import weibo.pojo.plList;
-import weibo.pojo.plmessage;
+import weibo.pojo.*;
 
 import javax.annotation.Resource;
 import java.text.ParseException;
@@ -38,9 +36,16 @@ public class plController {
     @Autowired
     messageService messageService;
 
+    @Autowired
+    RedisTemplate<Object, String> redisTemplate;
+
     @GetMapping("/pl")
     @ApiOperation(value = "评论")
     public String pl(String plContent,String time,String username,String weiboid) throws ParseException {
+
+        weibo weibo = new weibo();
+        weibo .setWeiboId(weiboid);
+        weibo weibo1 = weiboService.queryWeiboByID(weiboid);
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -77,6 +82,17 @@ public class plController {
         message.setPltime(new Date());
         messageService.insetplMessage(message);
 
+        //   热点微博：——————————————————————————————————
+//      获取分数值：
+        Double score = redisTemplate.opsForZSet().score("hot", weiboid);
+
+//      将这条微博加入到redis
+        if (score == null || score == 0 ){
+            redisTemplate.opsForZSet().add("hot",weiboid,1);
+        } else {
+            redisTemplate.opsForZSet().add("hot",weiboid,score+1);
+        }
+
         return "";
     }
 
@@ -97,6 +113,19 @@ public class plController {
         hfplList.setHfpltime(date);
         hfplList.setPlid(plid);
         hfplListService.insert(hfplList);
+
+        //   热点微博：——————————————————————————————————
+        String weiboid = plListService.queryWeiboId(plid);
+
+//      获取分数值：
+        Double score = redisTemplate.opsForZSet().score("hot", weiboid);
+
+//      将这条微博加入到redis
+        if (score == null || score == 0 ){
+            redisTemplate.opsForZSet().add("hot",weiboid,1);
+        } else {
+            redisTemplate.opsForZSet().add("hot",weiboid,score+1);
+        }
 
         return "";
     }

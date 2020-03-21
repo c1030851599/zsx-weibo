@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+  <link rel="shortcut icon" href="images/tx.jpg" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>我的首页</title>
+
+
+  <link rel='stylesheet' id='lmlblog-css'  href='css/lmlblog.css' type='text/css' media='all' />
+  <link rel='stylesheet' id='all-css'  href='css/all.css' type='text/css' media='all' />
+  <script type='text/javascript' src='js/jquery.min.js'></script>
+  <script type='text/javascript' src='js/ueditor.all.min.js'></script>
+
+  <!--bootstrap-->
+  <link href="css/bootstrap.css" rel="stylesheet">
+  <link href="css/fileinput.css" media="all" rel="stylesheet" type="text/css" />
+  <link rel='stylesheet' id='style-css'  href='css/style.css' type='text/css' media='all' />
+  <link rel="stylesheet" href="jQueryWbPl/css/style.css">
+  <link rel="stylesheet" href="jQueryWbPl/css/comment.css">
+
+  <!--jq和上面那个冲突了，注释掉！-->
+  <!--<script src="js/jquery-2.0.3.min.js"></script>-->
+  <script src="js/fileinput.js" type="text/javascript"></script>
+  <script src="js/fileinput_locale_zh.js"></script>
+  <script src="js/bootstrap.js"></script>
+
+  <link rel="stylesheet" href="css/jquery.mCustomScrollbar.min.css"/>
+  <link rel="stylesheet" href="css/jquery.emoji.css"/>
+  <link rel="stylesheet" href="css/railscasts.css"/>
+  <link rel="stylesheet" href="css/index.css"/>
+
+  <script type="text/javascript" src="jQueryWbPl/js/jquery.flexText.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="jqueryDZ/css/style.css"/>
+
+  <!--layui-->
+  <link rel="stylesheet" th:href="@{layui/css/layui.css}">
+
+
+</head>
+<body>
+<!-- 菜单 -->
+<!--<div class="lmlblog-member-left-profile" th:fragment = "hot" th:each="hotWeibo:${hotWeibos}">-->
+  <!--<h3>热门微博</h3>-->
+  <!--<li><i class="fa fa-address-book-o"></i> [[hotWeibo.content]]        <span>[[${hotWeibo.score}]]</span></li>-->
+  <!--<div class="lmlblog-member-left-profile-hide">-->
+    <!--<li><i class="fa fa-star"></i> 城市：<span>北京</span></li>-->
+  <!--</div>-->
+  <!--<div class="lmlblog-member-left-profile-more">查看更多 <i class="fa fa-angle-right"></i></div>-->
+<!--</div>-->
+
+<!-- 菜单 -->
+<div class="lmlblog-member-left-profile" th:fragment = "hot">
+  <h3>热门微博 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;热度</h3>
+  <li th:each="hotWeibo:${hotWeibos}">
+    <i class="fa fa-fire"> <a th:href="@{/query/}+ ${hotWeibo.weiboId}">[[${hotWeibo.content}]]</a></i>
+    <span style="float: right">[[${hotWeibo.score}]]</span></li>
+</div>
+
+<!-- menu-bar -->
+</body>
+
+
+</html>
