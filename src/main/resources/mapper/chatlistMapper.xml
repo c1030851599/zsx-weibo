@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="weibo.mapper.chatlistMapper">
+  <resultMap id="BaseResultMap" type="weibo.pojo.chatlist">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="me" jdbcType="INTEGER" property="me" />
+    <result column="you" jdbcType="INTEGER" property="you" />
+    <result column="sessionID" jdbcType="INTEGER" property="sessionid" />
+    <result column="lastTimeTalk" jdbcType="TIMESTAMP" property="lasttimetalk" />
+    <result column="sxMessage" jdbcType="INTEGER" property="sxMessage" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, me, you, sessionID, lastTimeTalk,sxMessage
+  </sql>
+  <!--<select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">-->
+    <!--select -->
+    <!--<include refid="Base_Column_List" />-->
+    <!--from chatlist-->
+    <!--where id = #{id,jdbcType=INTEGER}-->
+  <!--</select>-->
+  <!--<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">-->
+    <!--delete from chatlist-->
+    <!--where id = #{id,jdbcType=INTEGER}-->
+  <!--</delete>-->
+  <!--<insert id="insert" parameterType="weibo.pojo.chatlist">-->
+    <!--insert into chatlist (id, me, you, -->
+      <!--sessionID, lastTimeTalk)-->
+    <!--values (#{id,jdbcType=INTEGER}, #{me,jdbcType=VARCHAR}, #{you,jdbcType=VARCHAR}, -->
+      <!--#{sessionid,jdbcType=INTEGER}, #{lasttimetalk,jdbcType=TIMESTAMP})-->
+  <!--</insert>-->
+  <!--<insert id="insertSelective" parameterType="weibo.pojo.chatlist">-->
+    <!--insert into chatlist-->
+    <!--<trim prefix="(" suffix=")" suffixOverrides=",">-->
+      <!--<if test="id != null">-->
+        <!--id,-->
+      <!--</if>-->
+      <!--<if test="me != null">-->
+        <!--me,-->
+      <!--</if>-->
+      <!--<if test="you != null">-->
+        <!--you,-->
+      <!--</if>-->
+      <!--<if test="sessionid != null">-->
+        <!--sessionID,-->
+      <!--</if>-->
+      <!--<if test="lasttimetalk != null">-->
+        <!--lastTimeTalk,-->
+      <!--</if>-->
+    <!--</trim>-->
+    <!--<trim prefix="values (" suffix=")" suffixOverrides=",">-->
+      <!--<if test="id != null">-->
+        <!--#{id,jdbcType=INTEGER},-->
+      <!--</if>-->
+      <!--<if test="me != null">-->
+        <!--#{me,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="you != null">-->
+        <!--#{you,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="sessionid != null">-->
+        <!--#{sessionid,jdbcType=INTEGER},-->
+      <!--</if>-->
+      <!--<if test="lasttimetalk != null">-->
+        <!--#{lasttimetalk,jdbcType=TIMESTAMP},-->
+      <!--</if>-->
+    <!--</trim>-->
+  <!--</insert>-->
+  <!--<update id="updateByPrimaryKeySelective" parameterType="weibo.pojo.chatlist">-->
+    <!--update chatlist-->
+    <!--<set>-->
+      <!--<if test="me != null">-->
+        <!--me = #{me,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="you != null">-->
+        <!--you = #{you,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="sessionid != null">-->
+        <!--sessionID = #{sessionid,jdbcType=INTEGER},-->
+      <!--</if>-->
+      <!--<if test="lasttimetalk != null">-->
+        <!--lastTimeTalk = #{lasttimetalk,jdbcType=TIMESTAMP},-->
+      <!--</if>-->
+    <!--</set>-->
+    <!--where id = #{id,jdbcType=INTEGER}-->
+  <!--</update>-->
+  <!--<update id="updateByPrimaryKey" parameterType="weibo.pojo.chatlist">-->
+    <!--update chatlist-->
+    <!--set me = #{me,jdbcType=VARCHAR},-->
+      <!--you = #{you,jdbcType=VARCHAR},-->
+      <!--sessionID = #{sessionid,jdbcType=INTEGER},-->
+      <!--lastTimeTalk = #{lasttimetalk,jdbcType=TIMESTAMP}-->
+    <!--where id = #{id,jdbcType=INTEGER}-->
+  <!--</update>-->
+
+  <select id="selectChatList" parameterType="java.lang.Integer" resultType="weibo.pojo.chatlist">
+    select * from chatlist where me=#{id} order by lastTimeTalk desc
+  </select>
+
+  <insert id="insertOne" parameterType="weibo.pojo.chatlist">
+    insert into chatlist (id, me, you,
+      sessionID, lastTimeTalk)
+    values (#{id,jdbcType=INTEGER}, #{me,jdbcType=INTEGER}, #{you,jdbcType=INTEGER},
+      #{sessionid,jdbcType=VARCHAR}, #{lasttimetalk,jdbcType=TIMESTAMP})
+  </insert>
+
+  <select id="ifHave" parameterType="weibo.pojo.chatlist" resultType="weibo.pojo.chatlist">
+    SELECT * from chatlist where me=#{me} and you = #{you}
+  </select>
+
+  <insert id="insertOneRecord" parameterType="weibo.pojo.chatrecord">
+    insert into chatrecord (id, sessionid, sendMan,
+      receiveMan, contant,sendTime)
+    values (#{id,jdbcType=INTEGER}, #{sessionid,jdbcType=VARCHAR}, #{sendman,jdbcType=INTEGER},
+      #{receiveman,jdbcType=INTEGER}, #{contant,jdbcType=VARCHAR},#{sendtime,jdbcType=TIMESTAMP})
+  </insert>
+  <select id="ifTalk" resultType="weibo.pojo.chatlist">
+     SELECT * from chatlist where me=#{you} and you = #{me}
+  </select>
+
+  <select id="updateTime" parameterType="weibo.pojo.chatlist">
+   UPDATE chatlist SET lastTimeTalk = #{lasttimetalk} where sessionID = #{sessionid}
+  </select>
+
+  <select id="getSxMessage" resultType="java.lang.Integer">
+    SELECT sxMessage from chatlist where you = #{me} and sessionID =#{sessionid}
+  </select>
+
+  <update id="updateSxMessage" >
+    update chatlist set sxMessage = sxMessage + 1
+     <where>
+       you = #{me} and sessionID =#{sessionid}
+     </where>
+  </update>
+
+  <update id="updateSxMessageToZero" >
+    update chatlist set sxMessage = 0
+    <where>
+      you = #{me} and sessionID =#{sessionid}
+    </where>
+  </update>
+
+</mapper>

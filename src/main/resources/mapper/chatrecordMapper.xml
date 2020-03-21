@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="weibo.mapper.chatrecordMapper">
+  <resultMap id="BaseResultMap" type="weibo.pojo.chatrecord">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="sessionId" jdbcType="VARCHAR" property="sessionid" />
+    <result column="sendMan" jdbcType="INTEGER" property="sendman" />
+    <result column="receiveMan" jdbcType="INTEGER" property="receiveman" />
+    <result column="contant" jdbcType="VARCHAR" property="contant" />
+    <result column="sendTime" jdbcType="TIMESTAMP" property="sendtime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, sessionId, sendMan, receiveMan, contant, sendTime
+  </sql>
+  <!--<select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">-->
+    <!--select -->
+    <!--<include refid="Base_Column_List" />-->
+    <!--from chatrecord-->
+    <!--where id = #{id,jdbcType=INTEGER}-->
+  <!--</select>-->
+  <!--<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">-->
+    <!--delete from chatrecord-->
+    <!--where id = #{id,jdbcType=INTEGER}-->
+  <!--</delete>-->
+  <!--<insert id="insert" parameterType="weibo.pojo.chatrecord">-->
+    <!--insert into chatrecord (id, sessionId, sendMan, -->
+      <!--receiveMan, contant, sendTime-->
+      <!--)-->
+    <!--values (#{id,jdbcType=INTEGER}, #{sessionid,jdbcType=INTEGER}, #{sendman,jdbcType=VARCHAR}, -->
+      <!--#{receiveman,jdbcType=VARCHAR}, #{contant,jdbcType=VARCHAR}, #{sendtime,jdbcType=TIMESTAMP}-->
+      <!--)-->
+  <!--</insert>-->
+  <!--<insert id="insertSelective" parameterType="weibo.pojo.chatrecord">-->
+    <!--insert into chatrecord-->
+    <!--<trim prefix="(" suffix=")" suffixOverrides=",">-->
+      <!--<if test="id != null">-->
+        <!--id,-->
+      <!--</if>-->
+      <!--<if test="sessionid != null">-->
+        <!--sessionId,-->
+      <!--</if>-->
+      <!--<if test="sendman != null">-->
+        <!--sendMan,-->
+      <!--</if>-->
+      <!--<if test="receiveman != null">-->
+        <!--receiveMan,-->
+      <!--</if>-->
+      <!--<if test="contant != null">-->
+        <!--contant,-->
+      <!--</if>-->
+      <!--<if test="sendtime != null">-->
+        <!--sendTime,-->
+      <!--</if>-->
+    <!--</trim>-->
+    <!--<trim prefix="values (" suffix=")" suffixOverrides=",">-->
+      <!--<if test="id != null">-->
+        <!--#{id,jdbcType=INTEGER},-->
+      <!--</if>-->
+      <!--<if test="sessionid != null">-->
+        <!--#{sessionid,jdbcType=INTEGER},-->
+      <!--</if>-->
+      <!--<if test="sendman != null">-->
+        <!--#{sendman,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="receiveman != null">-->
+        <!--#{receiveman,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="contant != null">-->
+        <!--#{contant,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="sendtime != null">-->
+        <!--#{sendtime,jdbcType=TIMESTAMP},-->
+      <!--</if>-->
+    <!--</trim>-->
+  <!--</insert>-->
+  <!--<update id="updateByPrimaryKeySelective" parameterType="weibo.pojo.chatrecord">-->
+    <!--update chatrecord-->
+    <!--<set>-->
+      <!--<if test="sessionid != null">-->
+        <!--sessionId = #{sessionid,jdbcType=INTEGER},-->
+      <!--</if>-->
+      <!--<if test="sendman != null">-->
+        <!--sendMan = #{sendman,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="receiveman != null">-->
+        <!--receiveMan = #{receiveman,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="contant != null">-->
+        <!--contant = #{contant,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="sendtime != null">-->
+        <!--sendTime = #{sendtime,jdbcType=TIMESTAMP},-->
+      <!--</if>-->
+    <!--</set>-->
+    <!--where id = #{id,jdbcType=INTEGER}-->
+  <!--</update>-->
+  <!--<update id="updateByPrimaryKey" parameterType="weibo.pojo.chatrecord">-->
+    <!--update chatrecord-->
+    <!--set sessionId = #{sessionid,jdbcType=INTEGER},-->
+      <!--sendMan = #{sendman,jdbcType=VARCHAR},-->
+      <!--receiveMan = #{receiveman,jdbcType=VARCHAR},-->
+      <!--contant = #{contant,jdbcType=VARCHAR},-->
+      <!--sendTime = #{sendtime,jdbcType=TIMESTAMP}-->
+    <!--where id = #{id,jdbcType=INTEGER}-->
+  <!--</update>-->
+
+  <select id="getChatrecordList" parameterType="java.lang.String" resultType="weibo.pojo.chatrecord">
+    select * from chatrecord where sessionId = #{sessionId} order by sendTime
+  </select>
+
+
+
+</mapper>
