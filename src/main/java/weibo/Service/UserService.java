@@ -7,6 +7,10 @@ import java.util.List;
 
 public interface UserService {
     boolean login(User user);
+
+    void register(User user);
+
+
     User findUser(String username);
     User findUserById(Integer id);
 

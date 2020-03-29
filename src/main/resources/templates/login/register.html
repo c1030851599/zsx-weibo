@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" class="no-js">
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-CN">
 <head>
 <meta charset="UTF-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
 <meta name="viewport" content="width=device-width, initial-scale=1"> 
-<title>login</title>
+<title>注册</title>
 <link rel="stylesheet" type="text/css" href="css/normalize.css" />
 <link rel="stylesheet" type="text/css" href="css/demo.css" />
 <!--必要样式-->
@@ -12,6 +12,62 @@
 <!--[if IE]>
 <script src="js/html5.js"></script>
 <![endif]-->
+	<script>
+    window.onload=function () {
+      document.getElementById("from").onsubmit = function () {
+        return checkname() &&checkpassword() && checkRepassword();
+      }
+      //    绑定离焦事件：
+      document.getElementById("username").onblur = checkname;
+      document.getElementById("password").onblur = checkpassword;
+      document.getElementById("Repassword").onblur = checkRepassword;
+
+    }
+
+    function checkname() {
+      var name = document.getElementById("username").value;
+      var reg_username = /^[a-zA-Z]{1}([a-zA-Z0-9]|[._]){4,19}$/;
+      var flag = reg_username.test(name);
+      var s_name = document.getElementById("s_username");
+      if(flag){
+        s_name.innerHTML="用户名可用";
+        s_name.style.color = 'green';
+      }else{
+        s_name.innerHTML="用户名格式不规范，请重新输入！";
+        s_name.style.color = 'red';
+      }
+
+      return flag;
+    }
+    function checkpassword() {
+      var age = document.getElementById("password").value;
+      var reg_age = /^(\w){6,20}$/;
+      var flag = reg_age.test(age);
+      var s_age = document.getElementById("s_password");
+      if(flag){
+        s_age.innerHTML="";
+      }else{
+        s_age.innerHTML="密码格式不规范，请重新输入！";
+        s_age.style.color = 'red';
+      }
+      return flag;
+    }
+    function checkRepassword() {
+      var password = document.getElementById("password").value;
+      var rePassword = document.getElementById("Repassword").value;
+      var s_time = document.getElementById("s_RePassword");
+      var flag = password === rePassword;
+      if(flag){
+        s_time.innerHTML="";
+      }else{
+        s_time.innerHTML="对不起，两次密码不一致！！";
+        s_time.style.color = 'red';
+      }
+      return flag;
+    }
+
+	</script>
+
 </head>
 <body>
 		<div class="container demo-1">
@@ -20,20 +76,31 @@
 					<canvas id="demo-canvas"></canvas>
 					<div class="logo_box">
 						<h3>欢迎你，请注册</h3>
-						<form action="#" name="f" method="post">
+						<form action="/Register2" name="f" id="from" method="post">
 							<div class="input_outer">
 								<span class="u_user"></span>
-								<input name="logname" class="text" style="color: #FFFFFF !important" type="text" placeholder="请输入账户">
+								<input name="username" class="text" style="color: #FFFFFF !important" type="text" placeholder="请输入账户" id="username">
+							</div>
+							<div >
+								<span  th:text="${msg}" style="color:red;" id="s_username"></span>
+								<!--<span></span>-->
 							</div>
 							<div class="input_outer">
 								<span class="us_uer"></span>
-								<input name="logpass" class="text" style="color: #FFFFFF !important; position:absolute; z-index:100;"value="" type="password" placeholder="请输入密码">
+								<input name="password" class="text" style="color: #FFFFFF !important; position:absolute; z-index:100;"value="" type="password" placeholder="请输入密码" id="password">
 							</div>
+							<div><span id="s_password"></span></div>
 							<div class="input_outer">
 								<span class="us_uer"></span>
-								<input name="logpass" class="text" style="color: #FFFFFF !important; position:absolute; z-index:100;"value="" type="password" placeholder="请再次输入密码">
+								<input name="logpass" class="text" style="color: #FFFFFF !important; position:absolute; z-index:100;"value="" type="password" placeholder="请再次输入密码" id="Repassword">
 							</div>
-							<div class="mb2"><a class="act-but2 submit" href="javascript:;" style="color: #FFFFFF">注册</a></div>
+							<div><span id="s_RePassword"></span></div>
+							<div class="mb2">
+								<!--<a class="act-but2 submit" style="color: #FFFFFF"  href="javascript:void(0)" onclick="haha()" id="submit">注册	</a>-->
+								<button type="submit" class="act-but2 submit" style="color: #FFFFFF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									注册&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+							</div>
+
 						</form>
 					</div>
 				</div>
@@ -46,4 +113,5 @@
 		<div style="text-align:center;">
 </div>
 	</body>
+
 </html>

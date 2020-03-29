@@ -15,11 +15,8 @@
     <result column="birthday" jdbcType="DATE" property="birthday" />
   </resultMap>
   <insert id="insert" parameterType="weibo.pojo.User">
-    insert into user (id, username, password, 
-      salt,headImgName,personal_label,webName,name,city,gender,birthday)
-    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{salt,jdbcType=VARCHAR},#{headImgName,jdbcType=VARCHAR},#{personal_label,jdbcType=VARCHAR}),#{webName,jdbcType=VARCHAR}),#{name,jdbcType=VARCHAR}),
-    #{city,jdbcType=VARCHAR}),#{gender,jdbcType=INTEGER}),#{birthday,jdbcType=DATE})
+    insert into user (id,username, password, salt)
+    values (,#{username},#{password},#{salt})
   </insert>
   <insert id="insertSelective" parameterType="weibo.pojo.User">
     insert into user

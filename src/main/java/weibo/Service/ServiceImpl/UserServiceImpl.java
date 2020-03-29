@@ -32,6 +32,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void register(User user) {
+        userMapper.insertSelective(user);
+    }
+
+    @Override
     public User findUser(String username) {
         return userMapper.findUser(username);
     }

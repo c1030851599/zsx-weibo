@@ -4,10 +4,15 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.util.ByteSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import weibo.Service.UserService;
@@ -19,6 +24,7 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 public class LoginController {
+    private static final Logger LOG = LoggerFactory.getLogger(LoginController.class);
 
     @Autowired
     UserService userService;
@@ -46,11 +52,53 @@ public class LoginController {
         return "redirect:/queryAll";
     }
 
+
+    @PostMapping("/Register2")
+    public String register(Model model,User user){
+        String username=user.getUsername();
+        String password=user.getPassword();
+
+        User user1 = userService.findUser(username);
+
+        //2.调用service层判断用户名是否存在（这一块其实是要查询数据库的）
+        if(user1!=null){
+            //存在
+            model.addAttribute("msg", "此员工已存在，请更换一个!");
+            return  "/login/register";
+
+        }else {
+            String passworedMD5 =  md5(password,"sxt");
+            user.setPassword(passworedMD5);
+            user.setSalt("sxt");
+            userService.register(user);
+            return "redirect:/Login";
+        }
+    }
+
+//    md5加密：
+public static final String md5(String password, String salt){
+  //加密方式
+  String hashAlgorithmName = "MD5";
+  //盐：为了即使相同的密码不同的盐加密后的结果也不同
+  ByteSource byteSalt = ByteSource.Util.bytes(salt);
+  //密码
+  Object source = password;
+  //加密次数
+  int hashIterations = 2;
+  SimpleHash result = new SimpleHash(hashAlgorithmName, source, byteSalt, hashIterations);
+  return result.toString();
+}
+
+
+
+
+
     //配合shiro配置中的默认访问url
     @RequestMapping(value="/Login")
     public String getLogin(HttpServletRequest request, Model model, HttpSession session, HttpServletResponse response){
         return "/login/login";
     }
+
 
     /**
      * 退出
@@ -73,10 +121,12 @@ public class LoginController {
 
     }
 
+
     @RequestMapping(value="403")
     public String unAuth(){
         return "403";
     }
+
 
 //    @RequestMapping(value="/login")
 //    public String userLogin(Model model, User user, HttpSession session){
