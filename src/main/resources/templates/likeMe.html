@@ -83,12 +83,7 @@
           </div>
 
           <!--热门话题-->
-          <div class="lmlblog-member-left-profile">
-            <h3>热门话题</h3>
-            <li><i class="fa fa-address-book-o"></i> I D：<span>520</span></li>
-            <li><i class="fa fa-transgender"></i> 性别：<span>女生</span></li>
-
-          </div>
+          <div th:replace="common/hot::hot"></div>
           <!--<div class="lmlblog-member-left-profile-more">查看更多 <i class="fa fa-angle-right"></i></div>-->
           <!--</div>-->
 
@@ -782,8 +777,9 @@
     var likeNum = parseInt(arr[0]);
     var plNum = parseInt(arr[1]);
     var zfNum = parseInt(arr[2]);
+    var chatNum = parseInt(arr[3]);
 
-    var count = likeNum + plNum + zfNum;
+    var count = likeNum + plNum + zfNum + chatNum;
     //总消息通知
     if (0 !== count && !isNaN(count)) {
       $('#message').text(count);
@@ -803,6 +799,11 @@
     if ("0" !== arr[2] && !isNaN(arr[2])) {
       $('#zfMessage').text(arr[2]);
       $('#zfMessage').css("display","")
+    };
+    //私聊通知
+    if ("0" !== arr[3] && !isNaN(arr[3])) {
+      $('#chatMessage').text(arr[3]);
+      $('#chatMessage').css("display","")
     };
 
   }

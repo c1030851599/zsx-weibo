@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import weibo.Service.UserService;
 import weibo.Service.WeiboService;
+import weibo.Service.hotService;
 import weibo.common.WeiboMethod;
 import weibo.pojo.*;
 
@@ -24,6 +25,8 @@ public class searchController {
     WeiboService weiboService;
     @Autowired
     UserService userService;
+    @Autowired
+    hotService hotService;
 
     @RequestMapping("/search")
     @ApiOperation(value = "查询模块，综合")
@@ -41,7 +44,11 @@ public class searchController {
         model.addAttribute("weibos", weibos1);
         model.addAttribute("personalLabel",user.getpersonal_label());
         model.addAttribute("searchContent", content);
+        List<hotWeibo> hotWeibo = hotService.getHotWeibo();
+        model.addAttribute("hotWeibos",hotWeibo);
+
         return "searchPage";
+
     }
 
 
@@ -66,6 +73,8 @@ public class searchController {
         model.addAttribute("list", persons);
         model.addAttribute("personalLabel",user.getpersonal_label());
         model.addAttribute("searchContent", content);
+        List<hotWeibo> hotWeibo = hotService.getHotWeibo();
+        model.addAttribute("hotWeibos",hotWeibo);
         return "searchPerson";
     }
 
@@ -84,6 +93,8 @@ public class searchController {
 
         model.addAttribute("weibos", weibos1);
         model.addAttribute("searchContent", content);
+        List<hotWeibo> hotWeibo = hotService.getHotWeibo();
+        model.addAttribute("hotWeibos",hotWeibo);
         return "searchArticlePage";
     }
 
@@ -103,6 +114,8 @@ public class searchController {
 
         model.addAttribute("weibos", weibos1);
         model.addAttribute("searchContent", content);
+        List<hotWeibo> hotWeibo = hotService.getHotWeibo();
+        model.addAttribute("hotWeibos",hotWeibo);
         return "searchPicturePage";
     }
 
@@ -121,7 +134,8 @@ public class searchController {
 
         model.addAttribute("weibos", weibos1);
         model.addAttribute("searchContent", content);
-
+        List<hotWeibo> hotWeibo = hotService.getHotWeibo();
+        model.addAttribute("hotWeibos",hotWeibo);
         return "searchVideoPage";
     }
 
@@ -141,6 +155,8 @@ public class searchController {
 
         model.addAttribute("weibos", weibos1);
         model.addAttribute("searchContent", content);
+        List<hotWeibo> hotWeibo = hotService.getHotWeibo();
+        model.addAttribute("hotWeibos",hotWeibo);
         return "searchMusicPage";
     }
 

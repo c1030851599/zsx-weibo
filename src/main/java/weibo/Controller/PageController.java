@@ -36,6 +36,8 @@ public class PageController {
 
     @Autowired
     WeiboMethod method;
+    @Autowired
+    hotService hotService;
 
     @GetMapping("/index")
     @ApiOperation(value = "跳转到首页")
@@ -93,6 +95,8 @@ public class PageController {
         List<weiboCustom> weibos1 = method.getWeibos(weibos,collect,love);
 
         model.addAttribute("weibos", weibos1);
+        List<hotWeibo> hotWeibo = hotService.getHotWeibo();
+        model.addAttribute("hotWeibos",hotWeibo);
         return "article";
     }
 
@@ -110,7 +114,8 @@ public class PageController {
         List<weiboCustom> weibos1 = method.getWeibos(weibos,collect,love);
 
         model.addAttribute("weibos", weibos1);
-
+        List<hotWeibo> hotWeibo = hotService.getHotWeibo();
+        model.addAttribute("hotWeibos",hotWeibo);
         return "picture";
     }
 
@@ -127,7 +132,8 @@ public class PageController {
         List<weiboCustom> weibos1 = method.getWeibos(weibos, collect, love);
 
         model.addAttribute("weibos", weibos1);
-
+        List<hotWeibo> hotWeibo = hotService.getHotWeibo();
+        model.addAttribute("hotWeibos",hotWeibo);
 
         return "video";
     }
@@ -229,7 +235,8 @@ public class PageController {
         List<weiboCustom> weibos1 = method.getWeibos(weibos, collect, love);
 
         model.addAttribute("weibos", weibos1);
-
+        List<hotWeibo> hotWeibo = hotService.getHotWeibo();
+        model.addAttribute("hotWeibos",hotWeibo);
 
         return "music";
     }

@@ -709,8 +709,9 @@ layui.use('layer', function(){ //独立版的layer无需执行这一句
     var likeNum = parseInt(arr[0]);
     var plNum = parseInt(arr[1]);
     var zfNum = parseInt(arr[2]);
+    var chatNum = parseInt(arr[3]);
 
-    var count = likeNum + plNum + zfNum;
+    var count = likeNum + plNum + zfNum + chatNum;
     //总消息通知
     if (0 !== count && !isNaN(count)) {
       $('#message').text(count);
@@ -730,6 +731,11 @@ layui.use('layer', function(){ //独立版的layer无需执行这一句
     if ("0" !== arr[2] && !isNaN(arr[2])) {
       $('#zfMessage').text(arr[2]);
       $('#zfMessage').css("display","")
+    };
+    //私聊通知
+    if ("0" !== arr[3] && !isNaN(arr[3])) {
+      $('#chatMessage').text(arr[3]);
+      $('#chatMessage').css("display","")
     };
 
   }
