@@ -68,9 +68,10 @@ public class WebSocketServer {
     int likeCount = userService.getLikeCount(userName);
     int plCount = userService.getPlCount(userName);
     int zfCount = userService.getZfCount(userName);
+    int chatNum = userService.getChatMessage(userName);
 
     //        通过websocket发送通知给本条微博者：
-      sendInfo(userName, likeCount+","+plCount+","+zfCount);
+      sendInfo(userName, likeCount+","+plCount+","+zfCount+","+chatNum);
 
   }
 

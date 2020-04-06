@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import weibo.Service.UserService;
 import weibo.Service.WeiboService;
+import weibo.Service.chatService;
 import weibo.Service.messageService;
 import weibo.WebSocket.WebSocketServer;
 import weibo.common.WeiboMethod;
@@ -28,6 +29,8 @@ public class MessageController {
   WeiboService weiboService;
   @Autowired
   messageService messageService;
+  @Autowired
+  chatService service;
 
   @Autowired
   UserService userService;
@@ -131,6 +134,32 @@ public class MessageController {
     model.addAttribute("weibos", list);
     return "zfMe";
   }
+
+  @RequestMapping("/chatMeMessage")
+  @ApiOperation(value = "私信我的页面")
+  public  String  chatMeMessage(HttpSession session, Model model, String content){
+
+    User user = (User) session.getAttribute("user");
+//    获取聊天对象列表
+    List<chatlistVo> chatList = service.getChatList(user.getId());
+
+    model.addAttribute("chatList",chatList);
+
+
+//    同时将私聊的消息数量清0
+    int likeCount = userService.getLikeCount(user.getUsername());
+    int plCount = userService.getPlCount(user.getUsername());
+    int zfCount = userService.getZfCount(user.getUsername());
+    int chatMessage = 0;
+    userService.updateChatZero(user.getUsername());
+    //        通过websocket发送通知给本条微博者：
+    webSocketServer.sendInfo(user.getUsername(), likeCount+","+plCount+","+zfCount+","+chatMessage);
+
+    return "/wechatWithouYou";
+  }
+
+
+
 
 
 }

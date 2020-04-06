@@ -10,10 +10,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import weibo.Service.UserService;
+import weibo.Service.WeiboService;
 import weibo.Service.chatService;
+import weibo.Service.messageService;
+import weibo.WebSocket.WebSocketServer;
 import weibo.WebSocket.WebSocketWeChatServer;
 import weibo.pojo.*;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.List;
@@ -28,6 +32,12 @@ public class ChatController {
   UserService userService;
   @Autowired
   WebSocketWeChatServer weChatServer;
+  @Autowired
+  messageService messageService;
+  @Resource
+  WebSocketServer webSocketServer;
+  @Autowired
+  WeiboService weiboService;
 
   @GetMapping("/weChat")
   @ApiOperation(value = "跳转到聊天页面")
@@ -115,6 +125,19 @@ public class ChatController {
 
 //    通过websocket发送消息给对方
     weChatServer.sendInfo(you.getUsername(), me.getUsername()+"|"+messages+"|"+ sxCount);
+
+//私聊消息通知：---------------------------------------------------------------------------------
+//        获取对该条微博点赞的实时总数量（当用户点击消息提示时清0）
+    int likeCount = userService.getLikeCount(username);
+    int plCount = userService.getPlCount(username);
+    int zfCount = userService.getZfCount(username);
+    int chatMessage = userService.getChatMessage(username);
+//      私聊后 私聊通知数量+1 并保存到数据库
+    chatMessage++;
+    userService.updateChatCount(username);
+    //        通过websocket发送通知给本条微博者：
+    webSocketServer.sendInfo(username, likeCount+","+plCount+","+zfCount + "," + chatMessage );
+
     return "";
 
   }

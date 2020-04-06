@@ -130,6 +130,11 @@
     select zfCount from user where username = #{username}
   </select>
 
+
+  <select id="selectChatMessage" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select chatMessage from user where username = #{username}
+  </select>
+
   <update id="updateLikeCount"  parameterType="java.lang.String">
     update user set likeCount = likeCount + 1 where username = #{username}
   </update>
@@ -146,6 +151,10 @@
     update user set zfCount = 0 where username = #{username}
   </update>
 
+  <update id="setChatZero"  parameterType="java.lang.String">
+    update user set chatMessage = 0 where username = #{username}
+  </update>
+
   <update id="updatePLCount"  parameterType="java.lang.String">
     update user set plCount = plCount + 1 where username = #{username}
   </update>
@@ -153,6 +162,11 @@
   <update id="updateZFCount"  parameterType="java.lang.String">
     update user set zfCount = zfCount + 1 where username = #{username}
   </update>
+
+  <update id="updateChatCount"  parameterType="java.lang.String">
+    update user set chatMessage = chatMessage + 1 where username = #{username}
+  </update>
+
 
 <select id="findPerson" parameterType="java.lang.String" resultType="weibo.pojo.User">
   select * from user where username like  concat('%',#{content},'%')

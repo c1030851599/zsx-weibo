@@ -27,6 +27,8 @@ public interface userMapper {
 
         Integer selectZFCount(String username);
 
+        Integer selectChatMessage(String username);
+
         void updateLikeCount(String username);
 
         void setZero(String username);
@@ -38,6 +40,11 @@ public interface userMapper {
         void updateZFCount(String username);
 
         void setzfZero(String username);
+
+        void updateChatCount(String username);
+
+        void setChatZero(String username);
+
 
         List<User> findPerson(String keyWord);
 

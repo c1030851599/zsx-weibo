@@ -72,6 +72,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Integer getChatMessage(String Username) {
+        return userMapper.selectChatMessage(Username);
+    }
+
+
+    @Override
     public void updateLikeCount(String userName) {
          userMapper.updateLikeCount(userName);
     }
@@ -100,6 +106,18 @@ public class UserServiceImpl implements UserService {
     public void updateZfZero(String userName) {
         userMapper.setzfZero(userName);
     }
+
+
+    @Override
+    public void updateChatCount(String userName) {
+        userMapper.updateChatCount(userName);
+    }
+
+    @Override
+    public void updateChatZero(String userName) {
+        userMapper.setChatZero(userName);
+    }
+
 
     @Override
     public boolean ifGZ(gz gz) {

@@ -16,9 +16,15 @@ public interface UserService {
 
     void updateHeadImg(User user);
     void updateInfo(User user);
+
+
+
     Integer getPlCount(String Username);
     Integer getLikeCount(String Username);
     Integer getZfCount(String Username);
+    Integer getChatMessage(String Username);
+
+
     void updateLikeCount(String userName);
     void updateZero(String userName);
 
@@ -27,6 +33,10 @@ public interface UserService {
 
     void updateZfCount(String userName);
     void updateZfZero(String userName);
+
+    void updateChatCount(String userName);
+    void updateChatZero(String userName);
+
 
 //    是否关注
     boolean ifGZ(gz gz);
