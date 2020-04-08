@@ -72,11 +72,12 @@ public class likeController {
       int likeCount = userService.getLikeCount(userName);
       int plCount = userService.getPlCount(userName);
       int zfCount = userService.getZfCount(userName);
+      int chatMessage = userService.getChatMessage(username);
 //      点赞后点赞通知数量+1 并保存到数据库
       likeCount++;
       userService.updateLikeCount(userName);
       //        通过websocket发送通知给本条微博者：
-      webSocketServer.sendInfo(userName, likeCount+","+plCount+","+zfCount);
+      webSocketServer.sendInfo(userName, likeCount+","+plCount+","+zfCount+","+ chatMessage );
 
 //     添加一条点赞通知
         likemessage message = new likemessage();

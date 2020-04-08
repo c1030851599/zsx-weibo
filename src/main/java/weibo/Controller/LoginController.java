@@ -70,6 +70,7 @@ public class LoginController {
             String passworedMD5 =  md5(password,"sxt");
             user.setPassword(passworedMD5);
             user.setSalt("sxt");
+            user.setHeadImgName("defalut.jpg");
             userService.register(user);
             return "redirect:/Login";
         }

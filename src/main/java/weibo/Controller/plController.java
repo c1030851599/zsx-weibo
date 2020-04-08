@@ -68,10 +68,11 @@ public class plController {
         int likeCount = userService.getLikeCount(userName);
         int plCount = userService.getPlCount(userName);
         int zfCount = userService.getZfCount(userName);
+        int chatMessage = userService.getChatMessage(username);
 //      评论后评论通知数量+1
         plCount++;
         userService.updatePlCount(userName);
-        webSocketServer.sendInfo(userName, likeCount+","+plCount+","+zfCount);
+        webSocketServer.sendInfo(userName, likeCount+","+plCount+","+zfCount+","+ chatMessage );
 
         //     添加一条评论通知
         plmessage message = new plmessage();
@@ -92,7 +93,6 @@ public class plController {
         } else {
             redisTemplate.opsForZSet().add("hot",weiboid,score+1);
         }
-
         return "";
     }
 
@@ -113,19 +113,6 @@ public class plController {
         hfplList.setHfpltime(date);
         hfplList.setPlid(plid);
         hfplListService.insert(hfplList);
-
-        //   热点微博：——————————————————————————————————
-        String weiboid = plListService.queryWeiboId(plid);
-
-//      获取分数值：
-        Double score = redisTemplate.opsForZSet().score("hot", weiboid);
-
-//      将这条微博加入到redis
-        if (score == null || score == 0 ){
-            redisTemplate.opsForZSet().add("hot",weiboid,1);
-        } else {
-            redisTemplate.opsForZSet().add("hot",weiboid,score+1);
-        }
 
         return "";
     }

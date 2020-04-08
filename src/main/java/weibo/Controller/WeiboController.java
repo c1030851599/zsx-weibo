@@ -176,10 +176,11 @@ public class WeiboController {
         int likeCount = userService.getLikeCount(userName);
         int plCount = userService.getPlCount(userName);
         int zfCount = userService.getZfCount(userName);
+        int chatMessage = userService.getChatMessage(username);
 //      转发后转发通知数量+1
         zfCount++;
         userService.updateZfCount(userName);
-        webSocketServer.sendInfo(userName, likeCount+","+plCount+","+zfCount);
+        webSocketServer.sendInfo(userName, likeCount+","+plCount+","+zfCount+","+ chatMessage );
 
         //     添加一条转发通知
         zfmessage message = new zfmessage();
